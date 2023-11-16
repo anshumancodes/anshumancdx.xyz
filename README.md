@@ -11,11 +11,13 @@
 ## Running Locally
 
 `
+
 git clone https://github.com/anshumancodes/anshumancdx.xyz.git
-cd anshumancdx.xyz
+cd anshumancdx.xyz/app
 npm install
 npm run dev
  
+
 
 `
 
