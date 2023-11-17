@@ -26,4 +26,4 @@ npm run dev
 - will update!
 
 ## uses
-- refer to licence.md to learn about uses of this repo
+- refer to [licence.md](https://github.com/anshumancodes/anshumancdx.xyz/blob/main/licence.md) to learn about uses of this repo
