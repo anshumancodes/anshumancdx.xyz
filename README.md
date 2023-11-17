@@ -26,4 +26,4 @@ npm run dev
 - will update!
 
 ## uses
-- refer to licence.txt to learn about uses of this repo
+- refer to licence.md to learn about uses of this repo
