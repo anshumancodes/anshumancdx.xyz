@@ -1,26 +1,32 @@
-import React from "react"
-import Nav from "./components/Nav"
-import { useState } from "react";
-function App() {
-  const [isDarkMode, setDarkMode] = useState(false);
-  const toggleMode = () => {
-    setDarkMode(!isDarkMode);
-  };
-  
-  const BackgroundMode={
-    backgroundColor: isDarkMode ? 'whiteColorBg' : 'primary-black-bg'  ,
-     
-   }
+import React, { useState } from "react";
+import Nav from "./components/Nav";
 
-  
-   
-  return (
+
+
+
+function App() {
+  const [isDarkMode, setDarkMode] = useState(true);
+
+
+
+  const toggleMode = () => {
+    setDarkMode(isDarkMode=>!isDarkMode);
     
-    <div className={`h-screen bg-${BackgroundMode.backgroundColor}`}>
+    
+    
+    
+
+  };
+
+
+
+
+  return ( 
+    <div className={`h-screen ${isDarkMode ? "dark" : "light"}` }>
       <Nav isDarkMode={isDarkMode} toggleMode={toggleMode} />
-      
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
+
