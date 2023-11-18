@@ -1,3 +1,52 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* :root { */
+    /* Dark Mode
+    --black-bg: #0d1117;
+    --gray-color: #161b22;
+    --purple-color: #acb4fe;
+    --purple-smoke-color: #cdd0f3;
+    --white-smoke-color: #8b949e;
+    --white-color: #e5e5e5;
+    --gradient-color: linear-gradient(99.51deg, #cbbee7 9.03%, #ffffff 89.53%);
+  
+    /* Light Mode */
+    /* --white-color-bg: #e1e3f9;
+    --white-color-smoke-bg: #cdd0f3;
+    --purple-dark-color: #ae88fe;
+    --black-color: #212121;
+    --white-gradient-color: linear-gradient(
+      99.51deg,
+      #acb4fe 9.03%,
+      #ae88fe 89.53%
+    ); */
+  /* }  */
+
+
+*{
+    -webkit-font-smoothing: antialiased;
+  
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-tap-highlight-color: none;
+}
+
+
+.dark {
+    @apply bg-black-bg text-white-color 
+  }
+
+.light{
+
+    @apply bg-white-color-bg text-purple-dark-color
+
+}
+
+.darkbtnbg{
+    @apply bg-gray-color
+}
+.lightbtnbg{
+    @apply bg-purple-smoke 
+}
