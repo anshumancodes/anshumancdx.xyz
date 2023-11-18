@@ -43,6 +43,12 @@
     @apply bg-white-color-bg text-purple-dark-color
 
 }
+.darktxt{
+@apply text-purple-smoke
+}
+.lighttxt{
+  @apply text-white-smoke-color
+}
 
 .darkbtnbg{
     @apply bg-gray-color
