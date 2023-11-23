@@ -9,12 +9,14 @@ const tailwindconfig = {
         'white-color': '#e5e5e5',
         'purple-color-normal':'#acb4fe',
         'dark-mode-grad':'linear-gradient(99.51deg, #cbbee7 9.03%, #ffffff 89.53%)',
+
         'white-smoke-color':'#8b949e',
         // 
         'white-color-bg':'#e1e3f9',
         'purple-dark-color':'#ae88fe',
         'purple-smoke':'#cdd0f3',
-        'gray-color':'#161b22'
+        'gray-color':'#161b22',
+        'line-bg':'linear-gradient(180deg,rgba(36,44,55,0),#575d66);'
       }, width: {
         '80c': '80%',
          '70c':'70%',
@@ -26,6 +28,7 @@ const tailwindconfig = {
         '100pwx':'100px',
         '200pwx':'200px',
         '300pwx':'300px',
+        '320pwx':'318px',
         '400pwx':'400px',
         '500pwx':'500px',
         '600pwx':'600px',
@@ -33,6 +36,20 @@ const tailwindconfig = {
         
 
       },
+      height:{
+        '100phx':'100px',
+        '160phx':'160px',
+        
+
+        '200phx':'200px',
+        '300phx':'300px',
+        '400phx':'400px',
+        '500phx':'500px',
+        '600phx':'600px',
+        '700phx':'700px',
+      }
+      
+      ,
       margin:{
         '10up':'10vh'  , // mostly  i use it for margin top  thats why 'up' is mentioned
          '5gen':'5vh' ,   // general value for vertical margin 
