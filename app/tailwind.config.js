@@ -16,7 +16,9 @@ const tailwindconfig = {
         'purple-dark-color':'#ae88fe',
         'purple-smoke':'#cdd0f3',
         'gray-color':'#161b22',
-        'line-bg':'linear-gradient(180deg,rgba(36,44,55,0),#575d66);'
+        'line-bg':'linear-gradient(180deg,rgba(36,44,55,0),#575d66);',
+        'alert-bg':'#c6f6d5',
+        'info-blue':'#bee3f8'
       }, width: {
         '80c': '80%',
          '70c':'70%',
@@ -25,6 +27,7 @@ const tailwindconfig = {
          '40c':'40%',
          '30c':'30%',
         //  pixel widths
+        '20pwx':'20px',
         '100pwx':'100px',
         '200pwx':'200px',
         '300pwx':'300px',
@@ -37,6 +40,7 @@ const tailwindconfig = {
 
       },
       height:{
+        '20phx':'20px',
         '100phx':'100px',
         '160phx':'160px',
         
