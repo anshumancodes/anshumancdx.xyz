@@ -29,11 +29,11 @@ const Blog = ({ isDarkMode, toggleMode }) => {
   }
 
   return (
-    <div className={`m-h-screen ${isDarkMode ? "dark" : "light"} flex flex-col`}>
+    <div className={`h-screen ${isDarkMode ? "dark" : "light"} flex flex-col`}>
       <Nav isDarkMode={isDarkMode} toggleMode={toggleMode} />
       <div className="flex flex-col gap-6 text-justify w-full items-center mt-10up">
         <h1 className="text-2xl font-bold">
-          <span >{blog.title}</span>
+          <span  className="phone:w-80 phone:text-1x+">{blog.title}</span>
         </h1>
 
         <p className="w-2/3">{blog.content}</p>

@@ -33,7 +33,7 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
   }, []);
 
   return (
-    <div className={`m-h-screen ${isDarkMode ? "dark" : "light"} flex flex-col` }>
+    <div className={`h-screen ${isDarkMode ? "dark" : "light"} flex flex-col` }>
       <Nav toggleMode={toggleMode} isDarkMode={isDarkMode}/>
       <div >
       {blogs ? (
@@ -45,7 +45,7 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
       >
         {/*  */}
         <div className={`${isDarkMode ? "darkbtnbg" : "lightbtnbg"} flex flex-col w-80c p-3 rounded-medium-card`}>
-          <span className="flex  justify-between" ><h2 className="font-bold text-1x+">{blog.title}</h2> <p>{blog.date}</p> </span>
+          <span className="flex  justify-between" ><h2 className="font-bold text-1x+ phone:w-80c phone:text-1x">{blog.title}</h2> <p>{blog.date}</p> </span>
           <p className="mt-5gen" >{blog.content.split(" ").slice(0,80).join(" ")}<Link to={`/blog/${blog.id}`} className="text-blue-500">read more</Link></p>
         </div>
         {/*  */}
