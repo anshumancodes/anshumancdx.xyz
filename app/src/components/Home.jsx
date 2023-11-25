@@ -6,6 +6,7 @@ import Me from "./Me";
 import Introduction from "./Introduction";
 import Path from "./Path";
 import PopularBlogs from "./PopularBlogs";
+import Footer from "./Footer";
 
 
 const Home = ({ isDarkMode, toggleMode }) => {
@@ -15,12 +16,14 @@ const Home = ({ isDarkMode, toggleMode }) => {
   //   setDarkMode((isDarkMode) => !isDarkMode);
   // };
   return (
-    <div className={`h-fit ${isDarkMode ? "dark" : "light"} flex flex-col` }>
+    <div className={`min-h-screen ${isDarkMode ? "dark" : "light"} flex flex-col` }>
         <Nav isDarkMode={isDarkMode} toggleMode={toggleMode} />
       <Me isDarkMode={isDarkMode} />
       <Introduction isDarkMode={isDarkMode} />
       <Path/>
-      <PopularBlogs/>
+      {/* disabled as there is no blogs currently */}
+      {/* <PopularBlogs/> */}
+      <Footer/>
     </div>
   );
 };
