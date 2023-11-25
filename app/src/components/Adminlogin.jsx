@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/Firebase";
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const Adminlogin = ({ onLogin }) => {
   const [email, setEmail] = useState("");
@@ -20,7 +20,7 @@ const Adminlogin = ({ onLogin }) => {
       // Call the onLogin callback or perform other actions as needed
       onLogin(true);
       
-      navigate("/createblog")
+      // navigate("/createblog")
       
     } catch (error) {
       // Handle login errors
