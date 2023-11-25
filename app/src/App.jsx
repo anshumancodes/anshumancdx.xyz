@@ -26,15 +26,7 @@ function App() {
   };
 
   return (
-    // <div className={`h-fit ${isDarkMode ? "dark" : "light"} flex flex-col` }>
-    //   <Nav isDarkMode={isDarkMode} toggleMode={toggleMode} />
-    //   <Me isDarkMode={isDarkMode} />
-    //   <Introduction isDarkMode={isDarkMode} />
-    //   <Path/>
-    //   <PopularBlogs/>
-    //   {/* <Blogs/> */}
-
-    // </div>
+    
     <div>
       <Router>
         <Routes>
