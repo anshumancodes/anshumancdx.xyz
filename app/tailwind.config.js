@@ -20,6 +20,7 @@ const tailwindconfig = {
         'alert-bg':'#c6f6d5',
         'info-blue':'#bee3f8'
       }, width: {
+        '100c':'100%',
         '80c': '80%',
          '70c':'70%',
          '60c':'60%',
@@ -77,7 +78,11 @@ const tailwindconfig = {
          'basic-tag':'21px',
 
          'complete':'50%'
-      }
+      },
+      screens: {
+        'phone': { max: '535px' },
+        
+      },
      
     },
   },
