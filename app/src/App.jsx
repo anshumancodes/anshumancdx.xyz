@@ -5,7 +5,12 @@ import Nav from "./components/Nav";
 // import Path from "./components/Path";
 // import PopularBlogs from "./components/PopularBlogs";
 import Blogs from "./components/Blogs";
-import { BrowserRouter as Router, Routes, Route ,Navigate} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Home from "./components/Home";
 import Addblogs from "./components/Addblogs";
 import Blog from "./components/Blog";
@@ -26,7 +31,6 @@ function App() {
   };
 
   return (
-    
     <div>
       <Router>
         <Routes>
@@ -45,21 +49,18 @@ function App() {
             element={<Blog isDarkMode={isDarkMode} toggleMode={toggleMode} />}
           />
 
-          {/* for admin auth */}
           <Route
-          path="/createblog"
-          element={
-            isAdminLoggedIn ? (
-              <Addblogs />
-            ) : (
-              <Navigate to="/admin/login" />
-            )
-          }
-        />
-        <Route
-          path="/admin/login"
-          element={<Adminlogin onLogin={handleAdminLogin} />}
-        />
+            path="/admin/login"
+            element={<Adminlogin onLogin={handleAdminLogin} />}
+          />
+
+          {/* Private admin route - accessible only when logged in */}
+          <Route
+            path="/createblog"
+            element={
+              isAdminLoggedIn ? <Addblogs /> : <Navigate to="/admin/login" />
+            }
+          />
         </Routes>
       </Router>
     </div>
