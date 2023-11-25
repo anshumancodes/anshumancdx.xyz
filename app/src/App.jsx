@@ -50,15 +50,18 @@ function App() {
           />
 
           <Route
-            path="/admin/login"
-            element={<Adminlogin onLogin={handleAdminLogin} />}
-          />
-
-          {/* Private admin route - accessible only when logged in */}
-          <Route
-            path="/createblog"
+            path="/admin"
             element={
-              isAdminLoggedIn ? <Addblogs /> : <Navigate to="/admin/login" />
+              isAdminLoggedIn ? (
+                <>
+                  {/* The Addblogs component is nested under /admin route */}
+                  <Route path="/createblog" element={<Addblogs />} />
+                  {/* You can add more admin-related routes here */}
+                </>
+              ) : (
+                // If not logged in, redirect to admin login
+                <Navigate to="/admin/login" />
+              )
             }
           />
         </Routes>
