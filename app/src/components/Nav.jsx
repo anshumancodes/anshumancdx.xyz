@@ -10,12 +10,15 @@ const Nav = ({ isDarkMode, toggleMode }) => {
     color:isDarkMode? 'text-white-color':'purple-smoke-color',
    
   }
+  const Notavailableyet=()=>{
+    alert("not available yet will add soon!")
+  }
   
   return (
     <header className="w-full flex justify-center">
     <nav className="flex flex-wrap justify-between items-center w-80c py-5">
       <span className={`text-${textMode.color} flex gap-8 cursor-crosshair font-semibold text-lg items-center`} >
-        <a href="">Works</a>
+        <a href="" onClick={Notavailableyet}>Works</a>
         <a href="https://github.com/anshumancodes" className="flex gap-1 items-center">Source <DiGithubBadge className="text-3xl"/></a>
         <a href="/blogs">blogs</a>
       </span>
