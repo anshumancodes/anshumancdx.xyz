@@ -32,11 +32,13 @@ const Blog = ({ isDarkMode, toggleMode }) => {
     <div className={`h-screen ${isDarkMode ? "dark" : "light"} flex flex-col`}>
       <Nav isDarkMode={isDarkMode} toggleMode={toggleMode} />
       <div className="flex flex-col gap-6 text-justify w-full items-center mt-10up">
-        <h1 className="text-2xl font-bold">
-          <span  className="phone:w-80c text-1x">{blog.title}</span>
+        <h1 className="text-1x+ flex gap-20 Large:text-2xl font-bold">
+          <span  className="">{blog.title}</span>
+         
         </h1>
+        <span className="text-1x text-gray-500">{blog.date}</span>
 
-        <p className="w-2/3">{blog.content}</p>
+        <p className="w-90c Large:w-2/3">{blog.content}</p>
       </div>
     </div>
   );

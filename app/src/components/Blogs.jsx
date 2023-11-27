@@ -45,8 +45,8 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
       >
         {/*  */}
         <div className={`${isDarkMode ? "darkbtnbg" : "lightbtnbg"} flex flex-col w-80c p-3 rounded-medium-card`}>
-          <span className="flex  justify-between" ><h2 className="font-bold text-1x+ phone:w-80c text-base">{blog.title}</h2> <p>{blog.date}</p> </span>
-          <p className="mt-5gen" >{blog.content.split(" ").slice(0,80).join(" ")}<Link to={`/blog/${blog.id}`} className="text-blue-500">read more</Link></p>
+          <span className="flex gap-2 Large:flex   flex-wrap  justify-between" ><h2 className="  Large:font-bold text-1x+">{blog.title}</h2> <p>{blog.date}</p> </span>
+          <p className="mt-5gen" >{blog.content.split(" ").slice(0,80).join(" ")}<Link to={`/blog/${blog.id}`} className="text-blue-500"> read more</Link></p>
         </div>
         {/*  */}
 
