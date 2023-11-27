@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/Firebase";
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Adminlogin = ({ onLogin }) => {
   const [email, setEmail] = useState("");
@@ -14,13 +14,13 @@ const Adminlogin = ({ onLogin }) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-      // If the login is successful, you can perform additional actions
-      console.log("Logged in user:", userCredential.user);
+      //
+     
 
       // Call the onLogin callback or perform other actions as needed
       onLogin(true);
       
-      // navigate("/createblog")
+      navigate("/admin/createblog")
       
     } catch (error) {
       // Handle login errors
@@ -33,7 +33,7 @@ const Adminlogin = ({ onLogin }) => {
     <div className="bg-black-bg h-screen items-center flex flex-col justify-center">
         {/*  */}
 
-<h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-1x++ lg:text-2xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">login</span> to acess admin panel.</h1>
+<h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-1x++ lg:text-2xl"><span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">login</span> to acess admin panel.</h1>
 
   {/*  */}
       <form onSubmit={handleLogin} className="flex flex-col w-300pwx gap-4">
