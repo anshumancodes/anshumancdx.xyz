@@ -67,7 +67,7 @@ const Addblogs = () => {
 
       <form
         action=""
-        className="w-700pwx bg-gray-200 flex flex-col gap-3 mt-10up p-8 rounded-medium-card"
+        className="w-320pwx flex flex-col gap-3 Large:w-700pwx bg-gray-200  mt-10up p-8 rounded-medium-card"
       >
         <Stack className="bg-transparent flex flex-col gap-3">
           <label htmlFor="label">blog title</label>
