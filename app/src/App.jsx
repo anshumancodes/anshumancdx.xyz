@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import Nav from "./components/Nav";
-// import Me from "./components/Me";
-// import Introduction from "./components/Introduction";
-// import Path from "./components/Path";
-// import PopularBlogs from "./components/PopularBlogs";
+
 import Blogs from "./components/Blogs";
 import {
   BrowserRouter as Router,
@@ -42,33 +38,36 @@ function App() {
             path="/blogs"
             element={<Blogs isDarkMode={isDarkMode} toggleMode={toggleMode} />}
           />
-          <Route path="/createblog" element={<Addblogs />} />
-          {/* Add the route for individual blog posts */}
+
           <Route
             path="/blog/:id"
             element={<Blog isDarkMode={isDarkMode} toggleMode={toggleMode} />}
           />
-
+          
+          {/* Routes for admin */}
           <Route
-            path="/admin"
+            path="/admin/*"
             element={
               isAdminLoggedIn ? (
-                <>
-                  {/* The Addblogs component is nested under /admin route */}
+                // Render the admin routes only if logged in
+                <Routes>
                   <Route path="/createblog" element={<Addblogs />} />
-                  {/* You can add more admin-related routes here */}
-                </>
+                </Routes>
               ) : (
-                // If not logged in, redirect to admin login
+                // Redirect to admin login if not logged in
                 <Navigate to="/admin/login" />
               )
             }
           />
+          <Route
+            path="/admin/login"
+            element={<Adminlogin onLogin={handleAdminLogin} />}
+          />
         </Routes>
       </Router>
     </div>
-    // <div><Addblogs/></div>
   );
 }
 
 export default App;
+
