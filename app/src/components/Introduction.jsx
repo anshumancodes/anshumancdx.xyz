@@ -12,7 +12,7 @@ const Introduction = ({isDarkMode}) => {
 
         <p className="text-white-smoke-color">
           Hello, this is Anshuman and I love computer science , I have been writing code and creating small web apps since a year now.
-          am familiar with few programming languages like JavaScript , python and C & right now am a fulltime comp sci student.
+          am familiar with few programming languages and at this point am trying to build scalable web apps.
         </p>
 
         <span>
