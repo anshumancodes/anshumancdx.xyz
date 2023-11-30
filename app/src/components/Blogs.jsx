@@ -23,7 +23,7 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
           };
         });
         setblog(blogsList);
-        console.log(blogsList)
+        
       } catch (error) {
         console.error("Error fetching blogs:", error);
       }
@@ -57,7 +57,7 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
     <p>No blogs available</p>
   )
 ) : (
-  <p>No blogs found</p>
+  <p>loading...</p>
 )}
 
       </div>
