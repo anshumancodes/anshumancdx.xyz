@@ -23,7 +23,7 @@ const Nav = ({ isDarkMode, toggleMode }) => {
         <a href="/blogs">blogs</a>
       </span>
 
-      <span className=""><button className={` ${isDarkMode ? "darkbtnbg" : "lightbtnbg"} p-3 text-${textMode.color} rounded-lg`} onClick={toggleMode} name="mode-toggle-button"  >{isDarkMode ? <MdLightMode  /> : <MdDarkMode />}</button></span>
+      <span className=""><button className={` ${isDarkMode ? "darkbtnbg" : "lightbtnbg"} p-3 text-${textMode.color} rounded-lg`} onClick={toggleMode} name="mode-toggle-button" aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"} >{isDarkMode ? <MdLightMode  /> : <MdDarkMode />}</button></span>
     </nav>
     </header>
   );
