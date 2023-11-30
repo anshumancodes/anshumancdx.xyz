@@ -21,7 +21,7 @@ const Introduction = ({isDarkMode}) => {
                 <li>-Designer </li>
             </ul>
         </span>
-        <div className="w-full flex justify-center"><img src="./imgs/pizza.png" alt="" className="w-200pwx rounded-complete"/></div>
+        <div className="w-full flex justify-center"><img src="./imgs/pizza.png" alt="" className="w-200pwx h-200phx rounded-complete"/></div>
       </div>
     </div>
   );
