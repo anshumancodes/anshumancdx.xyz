@@ -23,7 +23,9 @@ npm run dev
 
 ## to be added
 
-- will update!
+- embed git repos in the works section 
+- serve images inside the blog 
+- newsletter
 
 ## uses
 - refer to [licence.md](https://github.com/anshumancodes/anshumancdx.xyz/blob/main/licence.md) to learn about uses of this repo
