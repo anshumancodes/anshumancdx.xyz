@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /secret/
+Disallow: /login/
+
+# Allow crawling of URLs starting with /blog
+Allow: /blog
+
+Sitemap: https://anshumancodes.live/sitemap.xml
