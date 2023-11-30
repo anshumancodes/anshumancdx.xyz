@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, lazy } from "react";
 
-import Blogs from "./components/Blogs";
+
+// import Blogs from "./components/Blogs";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
 } from "react-router-dom";
-import Home from "./components/Home";
-import Addblogs from "./components/Addblogs";
-import Blog from "./components/Blog";
-import Adminlogin from "./components/Adminlogin";
+const Home = lazy(() => import("./components/Home"));
+const Addblogs = lazy(() => import("./components/Addblogs"));
+const Blog = lazy(() => import("./components/Blog"));
+const Adminlogin = lazy(() => import("./components/Adminlogin"));
+const Blogs=lazy(()=> import ("./components/Blogs") );
+
+
 
 function App() {
   const [isDarkMode, setDarkMode] = useState(true);
