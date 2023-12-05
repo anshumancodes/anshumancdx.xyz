@@ -6,23 +6,27 @@ import Nav from "./Nav";
 
 const Blog = ({ isDarkMode, toggleMode }) => {
   const [blog, setBlog] = useState(null);
-  const { id } = useParams();
+  
+  const { slug } = useParams();
+
+ 
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const blogRef = doc(db, "blogs", id);
+        const blogRef = doc(db, "blogs",slug);
         const blogSnapshot = await getDoc(blogRef);
+        console.log(blogSnapshot.data())
         if (blogSnapshot.exists()) {
           setBlog(blogSnapshot.data());
         } else {
-          console.log("Blog not found");
+          console.log('blog not found');
         }
       } catch (error) {
         console.error("Error fetching blog:", error);
       }
     };
     fetchBlog();
-  }, [id]);
+  }, [slug]);
 
   if (!blog) {
     return <p>Loading...</p>;
