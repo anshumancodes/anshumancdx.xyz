@@ -23,6 +23,7 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
           };
         });
         setblog(blogsList);
+
         
       } catch (error) {
         console.error("Error fetching blogs:", error);
@@ -40,7 +41,7 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
   blogs.length > 0 ? (
     blogs.map((blog) => (
       <div
-        key={blog.id}
+        key={blog.title}
         className="flex gap-4 w-full px-8 py-3 mb-6 justify-center"
       >
         {/*  */}
