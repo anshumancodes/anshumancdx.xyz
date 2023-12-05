@@ -28,7 +28,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home isDarkMode={isDarkMode} toggleMode={toggleMode} />} />
             <Route path="/blogs" element={<Blogs isDarkMode={isDarkMode} toggleMode={toggleMode} />} />
-            <Route path="/blog/:id" element={<Blog isDarkMode={isDarkMode} toggleMode={toggleMode} />} />
+            <Route path="blog/:slug" element={<Blog isDarkMode={isDarkMode} toggleMode={toggleMode} />} />
 
             {/* Routes for admin */}
             <Route
