@@ -22,7 +22,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className={` ${isDarkMode ? "dark" : "light"} h-screen`}>
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
