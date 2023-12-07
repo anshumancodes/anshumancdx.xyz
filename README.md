@@ -10,7 +10,7 @@
 
 ## Running Locally
 
-`
+```bash
 
 git clone https://github.com/anshumancodes/anshumancdx.xyz.git
 cd anshumancdx.xyz/app
@@ -19,7 +19,7 @@ npm run dev
  
 
 
-`
+```
 
 ## to be added
 
