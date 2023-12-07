@@ -32,6 +32,11 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
 
     fetchBlogs();
   }, []);
+// for split the blog content
+
+
+
+  const maxLength = 80;
 
   return (
     <div className={`h-fit ${isDarkMode ? "dark" : "light"} flex flex-col` }>
@@ -45,10 +50,16 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
         className="flex gap-4 w-full px-8 py-3 mb-6 justify-center"
       >
         {/*  */}
+
         <div className={`${isDarkMode ? "darkbtnbg" : "lightbtnbg"} flex flex-col w-80c p-3 rounded-medium-card`}>
           <span className="flex gap-2 Large:flex   flex-wrap  justify-between" ><h2 className="  Large:font-bold text-1x+">{blog.title}</h2> <p>{blog.date}</p> </span>
-          <p className="mt-5gen" >{blog.content.split(" ").slice(0,80).join(" ")}<Link to={`/blog/${blog.id}`} className="text-blue-500"> read more</Link></p>
+         
+         <span className="mt-5gen flex gap-2 flex-wrap"> <p    dangerouslySetInnerHTML={{ __html:(blog.content.substring(0, 300) + '') }}></p> <Link to={`/blog/${blog.id}`} className="text-blue-500">read more</Link></span>
+         
+          
+        
         </div>
+
         {/*  */}
 
 

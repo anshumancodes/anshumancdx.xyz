@@ -42,7 +42,9 @@ const Blog = ({ isDarkMode, toggleMode }) => {
         </h1>
         <span className="text-1x text-gray-500">{blog.date}</span>
 
-        <p className="w-90c Large:w-2/3">{blog.content}</p>
+        {/* <p className="w-90c Large:w-2/3" dangerouslySetInnerHTML={blog.content}>{blog.content}</p> */}
+        <p className="w-90c Large:w-2/3" dangerouslySetInnerHTML={{ __html: blog.content }} />
+
       </div>
     </div>
   );
