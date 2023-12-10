@@ -12,7 +12,7 @@ const tailwindconfig = {
 
         'white-smoke-color':'#8b949e',
         // 
-        'white-color-bg':'#e1e3f9',
+        'white-color-bg':'#f1f5f9',
         'purple-dark-color':'#ae88fe',
         'purple-smoke':'#cdd0f3',
         'gray-color':'#161b22',
