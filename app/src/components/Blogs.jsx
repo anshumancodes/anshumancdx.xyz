@@ -46,16 +46,15 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
   blogs.length > 0 ? (
     blogs.map((blog) => (
       <div
-        key={blog.title}
+        key={blog.id}
         className="flex gap-4 w-full px-8 py-3 mb-6 justify-center"
       >
         {/*  */}
 
         <div className={`${isDarkMode ? "darkbtnbg" : "lightbtnbg"} flex flex-col w-80c p-3 rounded-medium-card`}>
           <span className="flex gap-2 Large:flex   flex-wrap  justify-between" ><h2 className="  Large:font-bold text-1x+">{blog.title}</h2> <p>{blog.date}</p> </span>
-         
-         <span className="mt-5gen flex gap-2 flex-wrap"> <p    dangerouslySetInnerHTML={{ __html:(blog.content.substring(0, 300) + '') }}></p> <Link to={`/blog/${blog.id}`} className="text-blue-500">read more</Link></span>
-         
+         <p>{blog.intro.split(" ").slice(0,80).join(" ") }<Link to={`/blog/${blog.id}`} className="text-blue-500">read more</Link></p>
+
           
         
         </div>
@@ -66,10 +65,10 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
       </div>
     ))
   ) : (
-    <p>No blogs available</p>
+    <p className="w-full flex justify-center items-center h-full">No blogs available</p>
   )
 ) : (
-  <p>loading...</p>
+  <p className="w-full flex justify-center items-center ">loading...</p>
 )}
 
       </div>
