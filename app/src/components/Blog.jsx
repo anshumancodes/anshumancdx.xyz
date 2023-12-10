@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactHtmlParser from 'react-html-parser';
 import { useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../config/Firebase";
@@ -11,7 +12,13 @@ const Blog = ({ isDarkMode, toggleMode }) => {
   const [readingTime, setReadingTime] = useState(0);
 
   const { slug } = useParams();
-
+   // to calculate the read time
+   const calculateReadingTime = (text) => {
+    const wordsPerMinute = 225; // Adjust as needed
+    const words = text.trim().split(/\s+/).length;
+    const time = Math.ceil(words / wordsPerMinute);
+    setReadingTime(time);
+  };
   useEffect(() => {
     const fetchBlog = async () => {
       try {
@@ -20,6 +27,7 @@ const Blog = ({ isDarkMode, toggleMode }) => {
 
         if (blogSnapshot.exists()) {
           setBlog(blogSnapshot.data());
+
           calculateReadingTime(blogSnapshot.data().content);
         } else {
           console.log("blog not found");
@@ -49,14 +57,16 @@ const Blog = ({ isDarkMode, toggleMode }) => {
     }
   };
 
-  // to calculate the read time
-  const calculateReadingTime = (text) => {
-    const wordsPerMinute = 225; // Adjust as needed
-    const words = text.trim().split(/\s+/).length;
-    const time = Math.ceil(words / wordsPerMinute);
-    setReadingTime(time);
-  };
 
+  // const transform = (node, index) => {
+  //   if (node.type === 'tag' && node.name === 'img') {
+  //     // Customize the rendering of image tags as needed
+  //     return <img key={index} src={node.attribs.src} alt={node.attribs.alt} />;
+  //   }
+
+  //   // Return null to use default rendering for other elements
+  //   return null;
+  // };
   return (
     <div className={`h-fit ${isDarkMode ? "dark" : "light"} flex flex-col w-full items-center`}>
       <Nav isDarkMode={isDarkMode} toggleMode={toggleMode} />
@@ -80,10 +90,9 @@ const Blog = ({ isDarkMode, toggleMode }) => {
             {blog.title}
           </h1>
         </span>
-
+        <img  src={blog.primaryimg} alt={blog.title} className="mt-5gen" />
         <div className="mt-5gen flex flex-col gap-2 items-center w-full text-left ">
-          <p dangerouslySetInnerHTML={{ __html: blog.intro }} />
-          <p dangerouslySetInnerHTML={{ __html: blog.content }} />
+          <p>{ReactHtmlParser(blog.content)}</p>
         </div>
       </article>
     </div>
