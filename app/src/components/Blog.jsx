@@ -82,7 +82,8 @@ const Blog = ({ isDarkMode, toggleMode }) => {
             </div>
             <div className="flex gap-4 text-1x+">
               <IoMdShare onClick={copyLink} className="cursor-pointer" />
-              <FaXTwitter />
+              <a href="https://twitter.com/anshumancdx"  className="cursor-pointer" ><FaXTwitter /></a>
+              
             </div>
           </div>
 
@@ -90,9 +91,9 @@ const Blog = ({ isDarkMode, toggleMode }) => {
             {blog.title}
           </h1>
         </span>
-        <img  src={blog.primaryimg} alt={blog.title} className="mt-5gen" />
-        <div className="mt-5gen flex flex-col gap-2 items-center w-full text-left ">
-          <p>{ReactHtmlParser(blog.content)}</p>
+        <img  src={blog.primaryimg} alt={blog.title} className="mt-5gen w-300pwx Large:w-600pwx" />
+        <div className="mt-5gen flex flex-col gap-2 items-center w-full text-left">
+          <span className=" w-90c Large:w-50c">{ReactHtmlParser(blog.content)}</span>
         </div>
       </article>
     </div>
