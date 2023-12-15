@@ -4,6 +4,7 @@ import editorapi from '../config/editorapi';
 
 const Texteditor = ({ value, onChange }) => {
   const editorRef = useRef(null);
+  const isInitialMount = useRef(true);
 
   const log = () => {
     if (editorRef.current) {
@@ -22,7 +23,12 @@ const Texteditor = ({ value, onChange }) => {
   };
 
   useEffect(() => {
-    if (editorRef.current && value !== editorRef.current.getContent()) {
+    // if (editorRef.current && value !== editorRef.current.getContent()) {
+    //   editorRef.current.setContent(value);
+    // }
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else if (editorRef.current && value !== editorRef.current.getContent()) {
       editorRef.current.setContent(value);
     }
   }, [value]);
@@ -33,8 +39,9 @@ const Texteditor = ({ value, onChange }) => {
         // api key hidden due to security issues get your own from tinymce website
         apiKey={editorapi.apikey}
         onInit={(evt, editor) => (editorRef.current = editor)}
-        initialValue={value}
+        value={value}
         init={{
+         
           branding: false,
           height: 400,
           menubar: true,
@@ -43,8 +50,10 @@ const Texteditor = ({ value, onChange }) => {
           toolbar:
             "formatselect | bold italic underline strikethrough | forecolor backcolor blockquote | link image media | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | removeformat",
           image_advtab: true
+          
         }}
         onEditorChange={handleEditorChange}
+        
       />
       <button onClick={log} className='mt-5gen bg-yellow-200 text-black-bg p-2'>
         Log editor content
