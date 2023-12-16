@@ -27,5 +27,8 @@ npm run dev
 - serve images inside the blog 
 - newsletter
 
+## added
+[ x ] serve images inside the blog 
+
 ## uses
 - refer to [licence.md](https://github.com/anshumancodes/anshumancdx.xyz/blob/main/licence.md) to learn about uses of this repo
