@@ -5,8 +5,9 @@ import Nav from "./Nav";
 import Me from "./Me";
 import Introduction from "./Introduction";
 import Path from "./Path";
-import PopularBlogs from "./PopularBlogs";
+// import PopularBlogs from "./PopularBlogs";
 import Footer from "./Footer";
+// import Work from "./Work";
 
 
 const Home = ({ isDarkMode, toggleMode }) => {
@@ -21,6 +22,7 @@ const Home = ({ isDarkMode, toggleMode }) => {
       <Me isDarkMode={isDarkMode} />
       <Introduction isDarkMode={isDarkMode} />
       <Path/>
+      {/* <Work/>  component build in progress...  */}
       {/* disabled as there is no blogs currently */}
       {/* <PopularBlogs/> */}
       <Footer/>
