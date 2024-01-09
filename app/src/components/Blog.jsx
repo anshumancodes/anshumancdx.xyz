@@ -6,6 +6,7 @@ import { db } from "../config/Firebase";
 import Nav from "./Nav";
 import { IoMdShare } from "react-icons/io";
 import { FaXTwitter } from "react-icons/fa6";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 const Blog = ({ isDarkMode, toggleMode }) => {
   const [blog, setBlog] = useState(null);
@@ -69,7 +70,10 @@ const Blog = ({ isDarkMode, toggleMode }) => {
   // };
   return (
     <div className={`h-fit ${isDarkMode ? "dark" : "light"} flex flex-col w-full items-center`}>
+      
       <Nav isDarkMode={isDarkMode} toggleMode={toggleMode} />
+      <span className=" w-80c"><a href="/blogs" aria-label="go back to blogs"><IoIosArrowRoundBack className="text-2x rounded-[50%] border-white-color border-[2px]"  /></a></span>
+
       <article className="flex flex-col w-90c items-center mt-10up">
         <span className=" Large:text-left">
           <div className="flex justify-between items-center">
@@ -87,10 +91,12 @@ const Blog = ({ isDarkMode, toggleMode }) => {
             </div>
           </div>
 
-          <h1 className="mt-4 text-xl font-bold  Large:text-2x">
+          <h1 className="mt-4 text-xl font-bold flex justify-center w-full Large:text-2x">
             {blog.title}
           </h1>
+          
         </span>
+        <p  className="w-90c Large:w-50c mt-5gen">{blog.intro}</p>
         <img  src={blog.primaryimg} alt={blog.title} className="mt-5gen w-300pwx Large:w-600pwx" />
         <div className="mt-5gen flex flex-col gap-2 items-center w-full text-left">
           <span className=" w-90c Large:w-50c">{ReactHtmlParser(blog.content)}</span>
