@@ -36,47 +36,17 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
   return (
     <div className={`h-fit ${isDarkMode ? "dark" : "light"} flex flex-col`}>
       <Nav toggleMode={toggleMode} isDarkMode={isDarkMode} />
+      <div className="w-full justify-center flex text-1x+">Subscribe to the newsletter</div>
+      <iframe src="https://anshumancdx.substack.com/embed" className="mt-5 bg-inherit"></iframe>
+
+
+      <div className="w-full justify-center flex text-1x+ mt-5">latest blogs </div>
       <div className="mt-10up grid gap-8 lg:grid-cols-2 ml-4 mr-4">
+        
         {blogs ? (
           blogs.length > 0 ? (
             blogs.map((blog) => (
-              // <article
-              //   key={blog.id}
-              //   className="flex flex-col gap-4 w-full mb-6 justify-center lg:w-auto"
-              // >
-              //   <div
-              //     className={`${
-              //       isDarkMode ? "darkbtnbg" : "light border-[2px]"
-              //     } flex flex-wrap gap-4 p-3 rounded-basic h-full`}
-              //   >
-              //     {/* <div>
-              //       <img
-              //         src={blog.primaryimg}
-              //         alt={blog.title}
-              //         className="w-300pwx h-40  rounded-none lg:w-200pwx lg:w-96 lg:h-52 object-cover lg:rounded-full"
-              //       />
-              //     </div> */}
-              //     <div className="flex flex-col gap-4 w-full">
-              //       <span className="flex gap-2 Large:flex flex-wrap justify-between items-center">
-              //         <h2 className="Large:font-bold text-1x+">
-              //           {blog.title}
-              //         </h2>
-              //         <p className="text-sm text-gray-400">{blog.date}</p>
-              //       </span>
-              //       <p className="w-full Large:w-96">
-              //         {blog.intro.split(" ").slice(0, maxLength).join(" ")}
-              //         <Link
-              //           to={`/blog/${blog.id}`}
-              //           className="text-blue-500 ml-1 flex items-center"
-              //         >
-              //           read more
-              //           <IoIosArrowRoundForward className="text-2x" />
-              //         </Link>
-              //       </p>
-              //     </div>
-              //   </div>
-              // </article>
-              // class="flex flex-col items-center gap-4 md:flex-row lg:gap-6 bg-white 
+              
               <article   className={`flex flex-col items-center gap-4 md:flex-row lg:gap-6 ${isDarkMode ? "darkbtnbg" : "light border-[2px]"} `} >
         <a href="#" class="group relative block h-56 w-full shrink-0 self-start overflow-hidden rounded-lg bg-gray-100 shadow-lg md:h-24 md:w-24 lg:h-40 lg:w-40">
           <img src={blog.primaryimg} loading="lazy" alt="" class="absolute inset-0 h-full w-full object-cover object-center transition duration-200 group-hover:scale-110" />
