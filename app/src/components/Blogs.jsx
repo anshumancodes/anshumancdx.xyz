@@ -5,6 +5,7 @@ import { collection, doc, getDocs } from "firebase/firestore";
 import { db } from "../config/Firebase";
 import { Link } from "react-router-dom";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import Footer from "./Footer";
 
 // ... (previous imports)
 
@@ -82,6 +83,7 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
           <p className="w-full flex justify-center items-center">loading...</p>
         )}
       </div>
+    <Footer/>
     </div>
   );
 };
