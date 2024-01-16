@@ -6,8 +6,8 @@ const Footer = () => {
   return (
     <div className='mt-10up'>
       
-      <footer class="relative mt-20 border-t px-4 pt-20">
-  <div class="absolute -top-10 left-1/2 h-16 w-16 -translate-x-1/2 rounded-[50%] border-2 border-sky-500 bg-white p-2"><img class="h-full object-contain" src="./public/imgs/anshumancdx.jpeg" alt="" /></div>
+      <footer className="relative mt-20 border-t px-4 pt-20">
+  <div className="absolute -top-10 left-1/2 h-16 w-16 -translate-x-1/2 rounded-[50%] border-2 border-sky-500 bg-white p-2"><img class="h-full object-contain" src="https://firebasestorage.googleapis.com/v0/b/anshumancdx.appspot.com/o/blogImgs%2Fanshumancdx.jpeg?alt=media&token=12a41528-7be1-4da7-ac6f-a6fe64ef132e" alt="" /></div>
   <nav aria-label="Footer Navigation" class="mx-auto mb-10 flex items-center justify-center max-w-lg flex-col gap-10 text-center sm:flex-row sm:text-left">
     <a href="https://github.com/anshumancodes" target='_blank' class="text-1x++"><FaGithub /></a>
     <a href="mailto:anshumanprof01@gmail.com"  target='_blank'class="text-1x++"><IoMailOutline /></a>
