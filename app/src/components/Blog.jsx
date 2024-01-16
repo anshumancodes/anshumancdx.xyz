@@ -14,7 +14,7 @@ const Blog = ({ isDarkMode, toggleMode }) => {
 
   const { slug } = useParams();
    // to calculate the read time
-   const calculateReadingTime = (text) => {
+  const calculateReadingTime = (text) => {
     const wordsPerMinute = 225; // Adjust as needed
     const words = text.trim().split(/\s+/).length;
     const time = Math.ceil(words / wordsPerMinute);
@@ -79,7 +79,7 @@ const Blog = ({ isDarkMode, toggleMode }) => {
           <div className="flex justify-between items-center">
             <div className="flex gap-1">
               <span className="text-sky-500">—</span>
-              <time className="text-gray-400 text-sm">{blog.date}</time>
+              <time className="text-gray-400 text-sm">  {blog.date?.toDate().toLocaleDateString()}</time>
               <i></i>
               <i></i>
               <time className="text-gray-400 text-sm">{`${readingTime} min read`}</time>
@@ -99,7 +99,7 @@ const Blog = ({ isDarkMode, toggleMode }) => {
         <p  className="w-90c Large:w-50c mt-5gen">{blog.intro}</p>
         <img  src={blog.primaryimg} alt={blog.title} className="mt-5gen w-300pwx Large:w-600pwx" />
         <div className="mt-5gen flex flex-col gap-2 items-center w-full text-left">
-          <span className=" w-90c Large:w-50c">{ReactHtmlParser(blog.content)}</span>
+          <span className=" w-90c text-justify Large:w-50c">{ReactHtmlParser(blog.content)}</span>
         </div>
       </article>
     </div>
