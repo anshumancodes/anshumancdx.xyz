@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ReactHtmlParser from 'react-html-parser';
+// import ReactHtmlParser from 'react-html-parser';
 import { useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../config/Firebase";
@@ -7,6 +7,7 @@ import Nav from "./Nav";
 import { IoMdShare } from "react-icons/io";
 import { FaXTwitter } from "react-icons/fa6";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import parse from 'html-react-parser';
 
 const Blog = ({ isDarkMode, toggleMode }) => {
   const [blog, setBlog] = useState(null);
@@ -96,10 +97,12 @@ const Blog = ({ isDarkMode, toggleMode }) => {
           </h1>
           
         </span>
-        <p  className="w-90c Large:w-50c mt-5gen">{blog.intro}</p>
+        <p  className="w-90c Large:w-50c mt-5gen prose  lg:prose-xl prose-slate">{blog.intro}</p>
         <img  src={blog.primaryimg} alt={blog.title} className="mt-5gen w-300pwx Large:w-600pwx" />
-        <div className="mt-5gen flex flex-col gap-2 items-center w-full text-left">
-          <span className=" w-90c text-justify Large:w-50c">{ReactHtmlParser(blog.content)}</span>
+        <div className="prose lg:prose-xl prose-slate">
+
+         <p className="prose lg:prose-xl prose-gray prose-strong:text-white-color prose-h2:text-white-color">{parse(blog.content)}</p>
+
         </div>
       </article>
     </div>
