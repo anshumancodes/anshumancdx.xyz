@@ -31,6 +31,7 @@ const tailwindconfig = {
         //  pixel widths
         '20pwx':'20px',
         '100pwx':'100px',
+        '150pwx':'150px',
         '200pwx':'200px',
         '300pwx':'300px',
         '320pwx':'318px',
@@ -86,7 +87,9 @@ const tailwindconfig = {
      
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 };
 
 export default tailwindconfig;
