@@ -99,9 +99,9 @@ const Blog = ({ isDarkMode, toggleMode }) => {
         </span>
         <p  className="w-90c Large:w-50c mt-5gen prose  lg:prose-xl prose-slate">{blog.intro}</p>
         <img  src={blog.primaryimg} alt={blog.title} className="mt-5gen w-300pwx Large:w-600pwx" />
-        <div className="prose lg:prose-xl prose-slate">
+        <div className="prose pl-1 pr-1 lg:w-full lg:prose-xl prose-slate">
 
-         <p className="prose lg:prose-xl prose-gray prose-strong:text-white-color prose-h2:text-white-color">{parse(blog.content)}</p>
+         <p className="prose lg:prose-xl prose-gray prose-strong:text-gray-400 prose-h2:text-gray-400">{parse(blog.content)}</p>
 
         </div>
       </article>
