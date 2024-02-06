@@ -1,5 +1,7 @@
 import React from 'react'
 import Nav from './Nav'
+import Form from './Hirepage/Form'
+import Pricing from './Hirepage/Pricing'
 
 const Hireme = ({ isDarkMode, toggleMode }) => {
   return (
@@ -61,6 +63,26 @@ const Hireme = ({ isDarkMode, toggleMode }) => {
 {/*  */}
 <div className='flex flex-col items-center mt-[200px]'>
 <img src="/imgs/download.png" alt=""  className='lg:w-[500px]'/>
+<div className='flex w-full justify-center items-center h-[20vh]'>
+  <div className='flex flex-col gap-2'>
+  <h3 className='lg:text-3xl font-extrabold lg:w-[40vw] leading-10'>
+    Tired of wasting time setting up your business site,
+   
+  </h3>
+  <span className='bg-blue-500 p-[2px] ml-2 lg:text-3xl font-extrabold lg:w-[40vw]'>explaining dummy freelancers how it should work?</span>
+
+  </div>
+  
+</div>
+<div className='mt-10up flex flex-col items-center w-full gap-5'>
+   
+    <Pricing/>
+    <label htmlFor="text" className='font-bold lg:text-2xl'> Book a call with me , and lets me build your idea into a reality</label>
+    <Form/>
+
+
+
+  </div>
     
 </div>
 
