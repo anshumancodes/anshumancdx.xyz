@@ -6,5 +6,6 @@ Disallow: /login/
 
 # Allow crawling of URLs starting with /blog
 Allow: /blog
+Allow: /blogs
 
-Sitemap: https://anshumancodes.live/sitemap.xml
+Sitemap: https://anshumancdx.xyz/sitemap.xml
