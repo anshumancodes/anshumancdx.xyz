@@ -32,3 +32,7 @@ npm run dev
 
 ## uses
 - refer to [licence.md](https://github.com/anshumancodes/anshumancdx.xyz/blob/main/licence.md) to learn about uses of this repo
+
+
+
+v2.0 : Building - jul 13/24
