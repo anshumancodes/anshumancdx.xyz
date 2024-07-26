@@ -1,24 +1,63 @@
-import React from 'react'
-import { FaXTwitter } from "react-icons/fa6";
-import { IoMailOutline } from "react-icons/io5";
-import { FaGithub } from "react-icons/fa";
+import React from "react";
+import { Star, GithubIcon, Twitter, Linkedin } from "lucide-react";
 const Footer = () => {
   return (
-    <div className='mt-10up'>
-      
-      <footer className="relative mt-20 border-t px-4 pt-20">
-  <div className="absolute -top-10 left-1/2 h-16 w-16 -translate-x-1/2 rounded-[50%] border-2 border-sky-500 bg-white p-2"><img class="h-full object-contain" src="https://firebasestorage.googleapis.com/v0/b/anshumancdx.appspot.com/o/blogImgs%2Fanshumancdx.jpeg?alt=media&token=12a41528-7be1-4da7-ac6f-a6fe64ef132e" alt="" /></div>
-  <nav aria-label="Footer Navigation" class="mx-auto mb-10 flex items-center justify-center max-w-lg flex-col gap-10 text-center sm:flex-row sm:text-left">
-    <a href="https://github.com/anshumancodes" target='_blank' class="text-1x++"><FaGithub /></a>
-    <a href="mailto:anshumanprof01@gmail.com"  target='_blank'class="text-1x++"><IoMailOutline /></a>
-    <a href="https://twitter.com/anshumancdx"  target='_blank'class="text-1x++"><FaXTwitter /></a>
-    <a href="/admin" class="font-medium text-blue-500">Login as admin</a>
-  </nav>
-  <p class="py-10 text-center text-gray-300">anshumancdx ©  {new Date().getFullYear()} | All Rights Reserved</p>
-</footer>
+    <footer className="flex flex-col md:flex-row gap-y-6 md:gap-x-32 border-t border-t-[#33363f] w-full md:justify-center px-12 md:px-0 py-14">
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-1">
+          <h2 className="font-bold text-2xl">anshumancdx</h2>
+          <p className="text-base font-[100] ">
+            Copyright © 2024-All rights reserved
+          </p>
+        </div>
+        <div className="px-6 py-2 border border-[#33363F] flex gap-1 rounded mt-2">
+          <p className="text-base font-[100] flex gap-1 ">
+            Built by anshumancdx <Star />
+          </p>
+        </div>
+      </div>
 
-    </div>
-  )
-}
+      <div className="flex flex-col gap-2">
+        <p className="text-base font-[100] text-[#33363F]">Socials</p>
+
+        <div className="flex flex-row ">
+          <a href="" className="px-2 py-2 ">
+            <GithubIcon />
+          </a>
+          <a href="" className="px-2 py-2 ">
+            <Twitter />
+          </a>
+          <a href="" className="px-2 py-2 ">
+            <Linkedin />
+          </a>
+        </div>
+
+        <p className="text-base font-[100] text-[#33363F]">admin</p>
+        <div>
+          <a href="/admin" className="text-blue-500 ">
+            login as admin
+          </a>
+        </div>
+      </div>
+      <div className="flex flex-col">
+        <p className="text-base font-[100] text-[#33363F]">Blog</p>
+        {/* child of /blog */}
+
+        <a href="" className="text-sm text-white-color mt-2 font-[100] underline">Express middlewares</a>
+        <a href="" className="text-sm text-white-color mt-2 font-[100] underline">Introduction to http</a>
+        <a href="" className="text-sm text-white-color mt-2 font-[100] underline">Stateful vs stateless Auth </a>
+     
+      </div>
+      <div className="flex flex-col">
+      <p className="text-base font-[100] text-[#33363F]">legal</p>
+      {/*child of /legal*/}
+      <a href="/privacy-policy" className="text-sm text-white-color mt-2 font-[100] underline">Privacy policy</a>
+      <a href="/terms-of-service" className="text-sm text-white-color mt-2 font-[100] underline">Terms of services</a>
+      <a href="/contract-agreement" className="text-sm text-white-color mt-2 font-[100] underline">contract agreement</a> {/*child of /legal/docs */}
+
+      </div>
+    </footer>
+  );
+};
 // flex w-screen items-center justify-center gap-3 flex-col
-export default Footer
+export default Footer;
