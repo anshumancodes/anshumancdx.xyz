@@ -8,8 +8,31 @@ import {
   MoveRight,
 } from "lucide-react";
 import Footer from "../Footer";
+import { getCalApi } from "@calcom/embed-react";
+import { useEffect } from "react";
 
 const Home = ({ isDarkMode, toggleMode }) => {
+  useEffect(() => {
+    (async function (e) {
+      const cal = await getCalApi({ namespace: "15min" });
+      cal("ui", {
+        styles: { branding: { brandColor: "#000000" } },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+    })();
+  }, []);
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi({ namespace: "30min" });
+      cal("ui", {
+        styles: { branding: { brandColor: "#000000" } },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+    })();
+  }, []);
+
   return (
     <main
       className={`min-h-screen ${isDarkMode ? "dark" : "light"} flex flex-col`}
@@ -111,11 +134,15 @@ const Home = ({ isDarkMode, toggleMode }) => {
               <li>Upto 3 free revisions, then 15$ per revision</li>
               <li>choose between hourly and retainer based plans</li>
             </ul>
-            <a href="">
-              <button className="bg-[#28A745] w-[117px] py-2  mt-4">
-                Hire now
-              </button>
-            </a>
+
+            <button
+              className="bg-[#28A745] w-[117px] py-2  mt-4"
+              data-cal-namespace="30min"
+              data-cal-link="anshumancdx/30min"
+              data-cal-config='{"layout":"month_view"}'
+            >
+              Hire now
+            </button>
           </div>
         </div>
 
@@ -139,11 +166,15 @@ const Home = ({ isDarkMode, toggleMode }) => {
               <li>Upto 7 free revisions, then 30$ per revision</li>
               <li>choose between retainer and project based plans</li>
             </ul>
-            <a href="">
-              <button className="bg-[#28A745] w-[117px] py-2  mt-4">
-                Hire now
-              </button>
-            </a>
+
+            <button
+              className="bg-[#28A745] w-[117px] py-2  mt-4"
+              data-cal-namespace="30min"
+              data-cal-link="anshumancdx/30min"
+              data-cal-config='{"layout":"month_view"}'
+            >
+              Hire now
+            </button>
           </div>
         </div>
 
@@ -155,12 +186,17 @@ const Home = ({ isDarkMode, toggleMode }) => {
                 write a mail-
               </button>
             </a>
-            <a href="">
-              <button className="bg-[#F2DD1F] px-4 py-2 text-black">
+           
+              <button
+                className="bg-[#F2DD1F] px-4 py-2 text-black"
+                data-cal-namespace="15min"
+                data-cal-link="anshumancdx/15min"
+                data-cal-config='{"layout":"month_view"}'
+              >
                 {" "}
                 Book a free call
               </button>
-            </a>
+           
           </div>
           <p className="md:text-xl text-gray-500 mt-3 w-full">
             *Both plans comes with free consultation call
@@ -187,7 +223,7 @@ const Home = ({ isDarkMode, toggleMode }) => {
         </div>
       </section>
 
-      <Footer/>
+      <Footer />
     </main>
   );
 };
