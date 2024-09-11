@@ -40,13 +40,13 @@ const RepoCard = ({ repo }) => {
   );
 };
 
-// Add more colors as needed
+
 const languageColors = {
   JavaScript: '#f1e05a',
   TypeScript: '#2b7489',
   Python: '#3572A5',
   Java: '#b07219',
-  // Add more language colors here
+  
 };
 
 export default RepoCard;
