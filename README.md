@@ -21,18 +21,12 @@ npm run dev
 
 ```
 
-## to be added
-
-- embed git repos in the works section 
-- serve images inside the blog 
-- newsletter
-
-## added
-[ x ] serve images inside the blog 
-
 ## uses
+want to clone and personalize it?
 - refer to [licence.md](https://github.com/anshumancodes/anshumancdx.xyz/blob/main/licence.md) to learn about uses of this repo
 
 
 
-v2.0 : Building - jul 13/24
+v2.0 : Building - jul 13/24 --complted : sep12/24
+
+
