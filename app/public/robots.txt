@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /secret/
+Disallow: /login/
+
+# Allow crawling of URLs starting with /blog
+Allow: /blog
+Allow: /blogs
+
+Sitemap: https://anshumancdx.xyz/sitemap.xml
