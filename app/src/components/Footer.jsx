@@ -22,13 +22,13 @@ const Footer = () => {
         <p className="text-base font-[100] text-[#33363F]">Socials</p>
 
         <div className="flex flex-row ">
-          <a href="" className="px-2 py-2 ">
+          <a href="https://github.com/anshumancodes" className="px-2 py-2 ">
             <GithubIcon />
           </a>
-          <a href="" className="px-2 py-2 ">
+          <a href="https://x.com/anshumancdx" className="px-2 py-2 ">
             <Twitter />
           </a>
-          <a href="" className="px-2 py-2 ">
+          <a href="https://www.linkedin.com/in/anshumancdx/" className="px-2 py-2 ">
             <Linkedin />
           </a>
         </div>
