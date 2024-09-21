@@ -3,7 +3,7 @@ import { Star, GitFork, Eye } from 'lucide-react';
 
 const RepoCard = ({ repo }) => {
   return (
-    <div className="bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+    <div className=" shadow-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl border-white-color border">
       <div className="p-6">
         <h3 className="text-xl font-semibold text-gray-800 mb-2">{repo.name}</h3>
         <p className="text-gray-600 mb-4">{repo.description || 'No description available'}</p>
