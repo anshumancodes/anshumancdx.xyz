@@ -3,7 +3,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import editorConfig from "../../config/BlogeditorConfig";
 import { ClassicEditor } from "ckeditor5";
 import { db } from '../../config/Firebase';
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc ,Timestamp} from "firebase/firestore";
 
 import "ckeditor5/ckeditor5.css";
 
@@ -11,11 +11,13 @@ const BlogEditor = () => {
   const editorContainerRef = useRef(null);
   const editorRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
+  const [archive,setArchive]=useState(false);
   const [content, setContent] = useState("");
   const [isDraft, setDraft] = useState(false);
   const [errorCreating, setErrorCreating] = useState(false);
   const [createdSuccess, setCreatedSuccess] = useState(false);
   const [slug, setSlug] = useState("");
+  const [title, setTitle] = useState("");
 
   useEffect(() => {
     setIsLayoutReady(true);
@@ -28,8 +30,11 @@ const BlogEditor = () => {
   const createBlog = async () => {
     try {
       const blogData = {
+        title,
         content,
         isDraft: isDraft,
+        archive:archive,
+        createdAt: Timestamp.fromDate(new Date())
       };
 
       const blogDocRef = doc(blogsRef, slug || undefined);
@@ -50,6 +55,10 @@ const BlogEditor = () => {
   const handleSlugChange = (event) => {
     setSlug(event.target.value);
   };
+  // Handle title input change
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+    };
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -77,6 +86,12 @@ const BlogEditor = () => {
           placeholder="Write slug"
           className="ml-[42px] mt-5 mb-5 py-2 px-5 min-w-[795px] max-w-[795px] border border-slate-400 outline-none"
           onChange={handleSlugChange}
+        />
+        <input
+          type="text"
+          placeholder="Write blog title"
+          className="ml-[42px] mt-5 mb-5 py-2 px-5 min-w-[795px] max-w-[795px] border border-slate-400 outline-none"
+          onChange={handleTitleChange}
         />
         <div
           className="editor-container editor-container_classic-editor editor-container_include-block-toolbar min-w-[795px] max-w-[795px] ml-[42px]"
