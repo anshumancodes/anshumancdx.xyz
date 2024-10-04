@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect } from "react";
-import Nav from "../Nav";
-import RepoCard from "./RepoCard";
-import BlogCard from "./BlogCard";
+import Nav from "../../components/Nav";
+import BlogCard from "../../components/landing/BlogCard"
+import RepoCard from "../../components/landing/RepoCard"
 import { db } from "../../config/Firebase";
 import { collection, doc, getDocs, query, orderBy } from "firebase/firestore";
-import Footer from "../Footer";
+import Footer from "../../components/Footer";
 import { ArrowUpRightFromCircle } from "lucide-react";
 
 const Home = () => {
