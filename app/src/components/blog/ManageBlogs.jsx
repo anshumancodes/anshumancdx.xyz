@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { collection, doc, getDocs, query, orderBy, deleteDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../config/Firebase";
+import { db, cms_db_id, blog_collection_id } from "../../config/appwriteconfig";
 
 const ManageBlogs = () => {
-  const [blogs, setBlogs] = useState();
+  const [blogs, setBlogs] = useState([]);
   const [selectedBlogId, setSelectedBlogId] = useState("");
   const [error, setError] = useState(null);
-  const [deleted,setDeleted]=useState(false);
-  const [archived,setArchived]=useState(false);
-  const [undraft,setUndraft]=useState(false);
+  const [deleted, setDeleted] = useState(false);
+  const [archived, setArchived] = useState(false);
+  const [undraft, setUndraft] = useState(false);
 
   useEffect(() => {
     fetchBlogs();
@@ -16,17 +15,8 @@ const ManageBlogs = () => {
 
   const fetchBlogs = async () => {
     try {
-      const blogsRef = collection(db, "blogs");
-      const blogquery = query(blogsRef, orderBy("date", "desc"));
-      const blogsSnapshot = await getDocs(blogquery);
-      const blogsList = blogsSnapshot.docs.map((doc) => {
-        return {
-          id: doc.id,
-          ...doc.data(),
-        };
-      });
-      
-      setBlogs(blogsList);
+      const response = await db.listDocuments(cms_db_id, blog_collection_id);
+      setBlogs(response.documents);
     } catch (error) {
       console.error("Error fetching blogs:", error);
       setError("Failed to fetch blogs. Please try again.");
@@ -39,11 +29,11 @@ const ManageBlogs = () => {
       return;
     }
     try {
-      await deleteDoc(doc(db, "blogs", selectedBlogId));
-      setBlogs(blogs.filter((blog) => blog.id !== selectedBlogId));
+      await db.deleteDocument(cms_db_id, blog_collection_id, selectedBlogId);
+      setBlogs(blogs.filter((blog) => blog.$id !== selectedBlogId)); // Use $id for Appwrite
       setSelectedBlogId("");
       setError(null);
-      setDeleted(true)
+      setDeleted(true);
     } catch (error) {
       console.error("Error deleting blog:", error);
       setError("Failed to delete the blog. Please try again.");
@@ -56,13 +46,13 @@ const ManageBlogs = () => {
       return;
     }
     try {
-      const blogRef = doc(db, "blogs", selectedBlogId);
-      await updateDoc(blogRef, { isDraft: false });
+      const updatedBlog = { Draft: false };
+      await db.updateDocument(cms_db_id, blog_collection_id, selectedBlogId, updatedBlog);
       setBlogs(blogs.map((blog) => 
-        blog.id === selectedBlogId ? { ...blog, isDraft: false } : blog
+        blog.$id === selectedBlogId ? { ...blog, Draft: false } : blog
       ));
       setError(null);
-      setUndraft(true)
+      setUndraft(true);
     } catch (error) {
       console.error("Error undrafting blog:", error);
       setError("Failed to undraft the blog. Please try again.");
@@ -75,12 +65,13 @@ const ManageBlogs = () => {
       return;
     }
     try {
-      const blogRef = doc(db, "blogs", selectedBlogId);
-      await updateDoc(blogRef, { archive: true });
+      const updatedBlog = { archive: true };
+      await db.updateDocument(cms_db_id, blog_collection_id, selectedBlogId, updatedBlog);
       setBlogs(blogs.map((blog) => 
-        blog.id === selectedBlogId ? { ...blog, archive: true } : blog
+        blog.$id === selectedBlogId ? { ...blog, archive: true } : blog
       ));
       setError(null);
+      setArchived(true);
     } catch (error) {
       console.error("Error archiving blog:", error);
       setError("Failed to archive the blog. Please try again.");
@@ -96,13 +87,12 @@ const ManageBlogs = () => {
         <div className="bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold">Blog List</h2>
           <div className="h-[400px] overflow-y-auto rounded-md border border-gray-200 mt-4 p-4">
-          {blogs ? (
-            blogs.length > 0 ? (
+            {blogs.length > 0 ? (
               blogs.map((blog) => (
-                <div key={blog.id} className="border border-gray-500 mb-2 p-4">
+                <div key={blog.$id} className="border border-gray-500 mb-2 p-4">
                   <h2 className="text-2xl mb-2">{blog.title}</h2>
-                  <span>slug/id: <span className="text-gray-500">{blog.id}</span></span>
-                  <a href={`/blog/${blog.id}`} className="text-blue-500 block mt-3">Read more</a>
+                  <span>slug/id: <span className="text-gray-500">{blog.$id}</span></span>
+                  <a href={`/blog/${blog.$id}`} className="text-blue-500 block mt-3">Read more</a>
                   {blog.isDraft && <span className="text-yellow-600 block">Draft</span>}
                   {blog.archive && <span className="text-gray-600 block">Archived</span>}
                 </div>
@@ -111,31 +101,16 @@ const ManageBlogs = () => {
               <p className="w-full flex justify-center items-center h-full">
                 No blogs available
               </p>
-            )
-          ) : (
-            <p className="w-full flex justify-center items-center">
-             Loading....
-            </p>
-          )}
+            )}
           </div>
         </div>
 
         <div className="mt-5">
-        {
-          deleted ? <span className="bg-red-500 mt-5 px-4 py-2">
-          Successfully deleted the article document!
-        </span> : (
-          archived ? <span className="bg-gray-500 mt-5 px-4 py-2">
-          Successfully archived the article document!
-        </span> : (
-          undraft ? <span className="bg-green-500 mt-5 px-4 py-2">
-          Successfully undrafted the article document!
-        </span> : null
-        )
-        )
-        }
-
+          {deleted && <span className="bg-red-500 mt-5 px-4 py-2">Successfully deleted the article document!</span>}
+          {archived && <span className="bg-gray-500 mt-5 px-4 py-2">Successfully archived the article document!</span>}
+          {undraft && <span className="bg-green-500 mt-5 px-4 py-2">Successfully undrafted the article document!</span>}
         </div>
+
         <div className="bg-white/80 backdrop-blur-sm p-6 rounded-lg shadow-md">
           <h2 className="text-2xl font-bold">Blog Actions</h2>
           <div className="space-y-4">
