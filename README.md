@@ -1,11 +1,11 @@
-<img src="https://therichpost.com/wp-content/uploads/2020/08/How-to-fetch-data-from-firebase-in-reactjs-1.png" align="center">
+<img src="https://www.canva.com/design/DAGT3o3BHfk/glYEN6Y9tIzKk6AU0sqoQw/view?utm_content=DAGT3o3BHfk&utm_campaign=designshare&utm_medium=link&utm_source=editor" align="center" width={800}>
 
 
 # anshumancdx.xyz
 
 - **Library** [reactjs](https://react.dev/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com)
-- **Database & auth**: [Firebase](https://firebase.google.com/)
+- **Database & auth**: [appwrite](https://appwrite.io/)
 
 
 ## Running Locally
