@@ -35,7 +35,7 @@ const Footer = () => {
 
         <p className="text-base font-[100] text-[#33363F]">admin</p>
         <div>
-          <a href="/admin" className="text-blue-500 ">
+          <a href="/admin/login" className="text-blue-500 ">
             login as admin
           </a>
         </div>
