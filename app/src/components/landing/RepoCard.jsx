@@ -5,9 +5,9 @@ const RepoCard = ({ repo }) => {
   return (
     <div className=" shadow-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl border-white-color border">
       <div className="p-6">
-        <h3 className="text-xl font-semibold text-gray-800 mb-2">{repo.name}</h3>
-        <p className="text-gray-600 mb-4">{repo.description || 'No description available'}</p>
-        <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
+        <h3 className="text-xl font-semibold mb-2">{repo.name}</h3>
+        <p className=" mb-4">{repo.description || 'No description available'}</p>
+        <div className="flex items-center justify-between text-sm  mb-4">
           <div className="flex items-center">
             <div className="w-3 h-3 rounded-full mr-2" style={{backgroundColor: repo.language ? languageColors[repo.language] : '#ccc'}}></div>
             {repo.language || 'Unknown'}
