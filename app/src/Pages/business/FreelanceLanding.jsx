@@ -7,10 +7,10 @@ import {
   FileEditIcon,
   MoveRight,
 } from "lucide-react";
-import Footer from "../Footer";
+import Footer from "../../components/Footer";
 import { getCalApi } from "@calcom/embed-react";
 import { useEffect } from "react";
-import Nav from "../Nav";
+import Nav from "../../components/Nav";
 
 const FreelanceLanding = () => {
   useEffect(() => {
