@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import editorConfig from "../../config/BlogeditorConfig";
+import editorConfig from "./BlogeditorConfig";
 import { ClassicEditor } from "ckeditor5";
 import { cms_db_id, blog_collection_id, db } from "../../config/appwriteconfig";
 import { Permission, Role } from "appwrite";
