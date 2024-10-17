@@ -1,25 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 const tailwindconfig = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
- 
   theme: {
     extend: {
-      colors:{
-        'black-bg': '#0d1117',
-        'white-color': '#e5e5e5',
-        'purple-color-normal':'#acb4fe',
-        'dark-mode-grad':'linear-gradient(99.51deg, #cbbee7 9.03%, #ffffff 89.53%)',
-
-        'white-smoke-color':'#8b949e',
-        // 
-        'white-color-bg':'#f1f5f9',
-        'purple-dark-color':'#ae88fe',
-        'purple-smoke':'#cdd0f3',
-        'gray-color':'#161b22',
-        'line-bg':'linear-gradient(180deg,rgba(36,44,55,0),#575d66);',
-        'alert-bg':'#c6f6d5',
-        'info-blue':'#bee3f8'
-      }, width: {
+      width: {
         '100c':'100%',
         '90c':'90%',
         '80c': '80%',
