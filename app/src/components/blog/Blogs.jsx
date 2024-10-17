@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Nav from "../Nav";
 
 import { db, cms_db_id, blog_collection_id,ID } from "../../config/appwriteconfig";
-
+import parse from 'html-react-parser';
 
 import { Link } from "react-router-dom";
 
@@ -19,7 +19,7 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
       try {
         const response = await db.listDocuments(cms_db_id, blog_collection_id);
         setBlog(response.documents);
-        console.log(blogs)
+        console.log(typeof(blogs[1].content))
       } catch (error) {
         console.error("Error fetching blogs:", error);
         setError("Failed to fetch blogs. Please try again.");
@@ -43,14 +43,14 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
           {blogs ? (
             blogs.length > 0 ? (
               blogs.map((blog) => (
-                <div className=" rounded-lg shadow-md overflow-hidden" style={{ height: '500px' }}>
+                <div className=" rounded-lg shadow-md  overflow-hidden" style={{ height: '400px' }}>
                 <div className="h-[20vh]">
-                  <img src={blog.primaryimg} alt={blog.title} className="h-[90%] w-full object-cover" />
+                  <img src={blog.coverImg} alt={blog.title} className="h-[80%] w-full object-cover" />
                 </div>
                 <div className="px-5">
                  
                   <h2 className="text-2xl mb-2">{blog.title}</h2>
-                  <p className="text-gray-600">{blog.content ?`${blog.content.split(200)}...`: "No Blog intro found"}</p>
+                  <p className="text-gray-600">{blog.content ? parse(blog.content.replace(/<figure.*?>.*?<\/figure>/, '').slice(0,100)+" ..."): "No Blog intro found"}</p>
                   <a href={`/blog/${blog.$id}`} className="text-blue-500 block mt-3">Read more</a>
                 </div>
               </div>
