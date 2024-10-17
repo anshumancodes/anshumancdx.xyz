@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState ,useContext } from "react";
 import {Edit} from "lucide-react"
+import { Link } from "react-router-dom";
+import { DarkModeContext } from "../../context/DarkModeContext";
+import { Sun ,Moon } from "lucide-react";
 
 const Sidebar = () => {
   const [isAnalyticsOpen, setIsAnalyticsOpen] = useState(false);
+  const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
 
   const toggleAnalytics = () => {
     setIsAnalyticsOpen(!isAnalyticsOpen);
@@ -11,14 +15,17 @@ const Sidebar = () => {
   return (
     <div>
       <div className=" bg-gray-100">
-        <div className="h-screen w-64 pb-10">
+        <div className="h-screen w-64">
           <div className="flex h-full flex-grow flex-col overflow-y-auto rounded-br-lg rounded-tr-lg bg-white pt-5 shadow-md">
-          <a href="#" title="" class="flex cursor-pointer items-center border-l-4 border-l-rose-600 py-2 px-4 text-sm font-medium text-rose-600 outline-none transition-all duration-100 ease-in-out focus:border-l-4">
-            <svg class="mr-4 h-5 w-5 align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" class=""></path>
+          <a title="" class="flex cursor-pointer items-center border-l-4 border-l-blue-600 py-2 px-4 text-sm font-medium text-blue-600 outline-none transition-all duration-100 ease-in-out focus:border-l-4">
+            <svg class="mr-4 h-5 w-5 align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" class=""></path>
             </svg>
             Dashboard
           </a>
+          <span className="flex items-center gap-2 px-4 py-2 border-y border-gray-400">toggle mode :<button onClick={toggleDarkMode} className=" rounded-lg p-1">
+          {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
+        </button></span>
 
 
 
@@ -31,7 +38,7 @@ const Sidebar = () => {
                 <nav className="flex-1">
                   <a
                     href="#"
-                    className="flex cursor-pointer items-center border-l-rose-600 py-2 px-4 text-sm font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out hover:border-l-4 hover:border-l-rose-600 hover:text-rose-600 focus:border-l-4"
+                    className="flex cursor-pointer items-center border-l-blue-600 py-2 px-4 text-sm font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out hover:border-l-4 hover:border-l-blue-600 hover:text-blue-600 focus:border-l-4"
                   >
                     
                   </a>
@@ -39,7 +46,7 @@ const Sidebar = () => {
                   <div className="relative transition">
                     <button
                       onClick={toggleAnalytics}
-                      className="flex peer relative w-full items-center border-l-rose-600 py-3 px-4 text-sm font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out hover:border-l-4 hover:text-rose-600 focus:border-l-4"
+                      className="flex peer relative w-full items-center border-l-blue-600 py-3 px-4 text-sm font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out hover:border-l-4 hover:text-blue-600 focus:border-l-4"
                     >
                    <svg
                       className="mr-4 h-5 w-5 align-middle"
@@ -78,7 +85,8 @@ const Sidebar = () => {
                         isAnalyticsOpen ? "max-h-96" : "max-h-0"
                       }`}
                     >
-                      <li className="flex m-2 cursor-pointer border-l-rose-600 py-3 pl-5 text-sm text-gray-600 transition-all duration-100 ease-in-out hover:border-l-4 hover:text-rose-600">
+                      <Link to={"create"}>
+                      <li className="flex m-2 cursor-pointer border-l-blue-600 py-3 pl-5 text-sm text-gray-600 transition-all duration-100 ease-in-out hover:border-l-4 hover:text-blue-600">
                         <span className="mr-5">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -96,8 +104,9 @@ const Sidebar = () => {
                           </svg>
                         </span>
                      Create post
-                      </li>
-                      <li className="flex m-2 cursor-pointer border-l-rose-600 py-3 pl-5 text-sm text-gray-600 transition-all duration-100 ease-in-out hover:border-l-4 hover:text-rose-600">
+                      </li></Link>
+                   <Link to={"manage"}>
+                   <li className="flex m-2 cursor-pointer border-l-blue-600 py-3 pl-5 text-sm text-gray-600 transition-all duration-100 ease-in-out hover:border-l-4 hover:text-blue-600">
                         <span className="mr-5">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -115,7 +124,7 @@ const Sidebar = () => {
                           </svg>
                         </span>
                         Manage Blog
-                      </li>
+                      </li></Link>
                     </ul>
                   </div>
                 </nav>
