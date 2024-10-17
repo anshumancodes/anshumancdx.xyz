@@ -1,22 +1,22 @@
-
 import React, { useState, useEffect } from "react";
 import Nav from "../../components/Nav";
-import BlogCard from "../../components/landing/BlogCard"
-import RepoCard from "../../components/landing/RepoCard"
-import { db } from "../../config/Firebase";
-import { collection, doc, getDocs, query, orderBy } from "firebase/firestore";
+import BlogCard from "../../components/landing/BlogCard";
+import RepoCard from "../../components/landing/RepoCard";
 import Footer from "../../components/Footer";
+import { db, cms_db_id, blog_collection_id } from "../../config/appwriteconfig";
 import { ArrowUpRightFromCircle } from "lucide-react";
 
 const Home = () => {
   const [repos, setRepos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [blogs, setBlog] = useState();
+  const [repoError, setRepoError] = useState(null);
+  const [blogs, setBlogs] = useState([]);
+  const [blogLoading, setBlogLoading] = useState(true);
+  const [blogError, setBlogError] = useState(null);
 
-  // Update this array with the actual names of repositories you want to display
-  const selectedRepoNames = ["youtube-backend", "youtube-client"]; // Replace with your desired repo names
+  const selectedRepoNames = ["youtube-backend", "youtube-client"]; // Example repos
 
+  // Fetching GitHub Repos
   useEffect(() => {
     const fetchAllRepos = async () => {
       setLoading(true);
@@ -34,10 +34,7 @@ const Home = () => {
           }
 
           const data = await response.json();
-
-          if (data.length === 0) {
-            break; // No more repos to fetch
-          }
+          if (data.length === 0) break;
 
           allRepos = [...allRepos, ...data];
           page++;
@@ -49,11 +46,10 @@ const Home = () => {
           }
         }
 
-        console.log("Fetched Repos:", allRepos);
         setRepos(allRepos);
       } catch (error) {
         console.error("Error fetching repos:", error);
-        setError("Failed to fetch repositories. Please try again later.");
+        setRepoError("Failed to fetch repositories. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -62,27 +58,20 @@ const Home = () => {
     fetchAllRepos();
   }, []);
 
-  // Filter only the selected repos based on the passed names
-  const filteredRepos = repos.filter((repo) =>
-    selectedRepoNames.includes(repo.name)
-  );
+  const filteredRepos = repos.filter((repo) => selectedRepoNames.includes(repo.name));
 
+  // Fetching Blogs
   useEffect(() => {
     const fetchBlogs = async () => {
+      setBlogLoading(true);
       try {
-        const blogsRef = collection(db, "blogs");
-        const blogquery = query(blogsRef, orderBy("date", "desc"));
-        const blogsSnapshot = await getDocs(blogquery);
-        const blogsList = blogsSnapshot.docs.map((doc) => {
-          return {
-            id: doc.id,
-            ...doc.data(),
-          };
-        });
-
-        setBlog(blogsList);
+        const response = await db.listDocuments(cms_db_id, blog_collection_id);
+        setBlogs(response.documents);
       } catch (error) {
         console.error("Error fetching blogs:", error);
+        setBlogError("Failed to fetch blogs. Please try again.");
+      } finally {
+        setBlogLoading(false);
       }
     };
 
@@ -92,21 +81,26 @@ const Home = () => {
   return (
     <main className="">
       <Nav />
-      <div className="flex flex-col  justify-center px-5 md:px-[200px] lg:px-[400px] mt-10">
+      <div className="flex flex-col justify-center px-5 md:px-[200px] lg:px-[400px] mt-10">
         <div>
           <h1 className="text-4xl font-bold">Hey there, it's Anshuman</h1>
-          <p className="text-gray-700 lg:w-[600px] flex flex-wrap">Software developer from India. Working with JavaScript and Python. Currently exploring more CS concepts and building projects(checkout those on github). </p>
-           <p className="flex flex-wrap gap-1 mt-2">Want to Hire me as a freelance developer? ,<ArrowUpRightFromCircle/><a href="/business" className="underline">/businesss</a></p>
+          <p className="lg:w-[600px] mt-2">
+            Software developer from India. Working with JavaScript and Python. Currently exploring core CS concepts and building projects (checkout those on GitHub).
+          </p>
+          <p className="flex gap-1 mt-2">
+            Want to hire me as a freelance developer?
+            <ArrowUpRightFromCircle />
+            <a href="/business" className="underline">/business</a>
+          </p>
         </div>
 
-        <div className="mt-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-            Featured Projects
-          </h2>
+        {/* Featured Projects */}
+        <div className="mt-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-2">Featured Projects</h2>
           {loading ? (
             <p>Loading repositories...</p>
-          ) : error ? (
-            <p>{error}</p>
+          ) : repoError ? (
+            <p>{repoError}</p>
           ) : (
             <div>
               {filteredRepos.length > 0 ? (
@@ -124,30 +118,29 @@ const Home = () => {
           )}
         </div>
 
+        {/* Latest Blog Posts */}
         <div className="mt-8 mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2"></h2>
-
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2 text-center">
-              Latest Blog Posts
-            </h2>
-            <div className="w-24 h-1 bg-blue-500 mx-auto mb-8"></div>
-{blogs && blogs.length > 0 ? (
-  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    {blogs.slice(-3).map(blog => (
-      <BlogCard key={blog.id} blog={blog} />
-    ))}
-  </div>
-) : (
-  <p className="text-gray-600 text-center">No blog posts available at the moment.</p>
-)}
-</div>
-
+          <h2 className="text-3xl md:text-4xl font-bold mb-2 text-center">
+            Latest Blog Posts
+          </h2>
+          <div className="w-24 h-1 bg-blue-500 mx-auto mb-8"></div>
+          {blogLoading ? (
+            <p>Loading blogs...</p>
+          ) : blogError ? (
+            <p className="text-center">{blogError}</p>
+          ) : blogs.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {blogs.slice(-3).map((blog) => (
+                <BlogCard key={blog.$id} blog={blog} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-600 text-center">No blog posts available at the moment.</p>
+          )}
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </main>
-   
   );
 };
 
