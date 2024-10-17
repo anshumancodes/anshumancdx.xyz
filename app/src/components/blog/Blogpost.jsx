@@ -68,7 +68,7 @@ const Blog = ({ isDarkMode, toggleMode }) => {
     <div className="h-screen flex flex-col w-full items-center">
      
       <span className="w-80c">
-        <a href="/blogs" aria-label="go back to blogs">
+        <a href="/blog" aria-label="go back to blogs">
           <IoIosArrowRoundBack className="text-2x rounded-[50%] border-white-color border-[2px]" />
         </a>
       </span>
@@ -97,15 +97,8 @@ const Blog = ({ isDarkMode, toggleMode }) => {
             {blog.title}
           </h1>
         </span>
-        <p className="w-90c Large:w-50c mt-5gen prose lg:prose-xl prose-gray">
-          {blog.intro}
-        </p>
-        <img
-          src={blog.primaryimg}
-          alt={blog.title}
-          className="mt-5gen w-300pwx Large:w-600pwx"
-        />
-        <div className="prose pl-1 pr-1 lg:w-full lg:prose-xl prose-gray">
+       
+        <div className="prose pl-1 pr-1 lg:w-full lg:prose-xl prose-gray mt-5">
           <p className="prose lg:prose-xl text-gray-600 prose-gray prose-strong:text-gray-400 prose-h2:text-gray-300 prose-h4:text-gray-400">
             {parse(blog.content)}
           </p>
