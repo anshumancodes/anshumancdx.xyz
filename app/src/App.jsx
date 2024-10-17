@@ -1,51 +1,40 @@
-import React, { useState, lazy, Suspense ,useContext} from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import React, { lazy, Suspense, useContext } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { DarkModeContext } from "./context/DarkModeContext";
+import BlogEditor from "./components/blog/BlogEditor";
+import Cms from "./Pages/Cms/Cms";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
-const Home = lazy(() => import("./components/landing/Home"));
-const Addblogs = lazy(() => import("./components/blog/Addblogs"));
-const Blog = lazy(() => import("./components/blog/Blog"));
+// Lazy loaded components
+const Home = lazy(() => import("./Pages/Home/Home"));
+const Blog = lazy(() => import("./components/blog/Blogpost"));
 const Adminlogin = lazy(() => import("./components/admin/Adminlogin"));
 const Blogs = lazy(() => import("./components/blog/Blogs"));
-const Business=lazy(()=>import ("./components/business/FreelanceLanding"))
-
+const Business = lazy(() => import("./Pages/business/FreelanceLanding"));
+const ManageBlogs = lazy(() => import("./components/blog/ManageBlogs"));
 
 function App() {
   const { isDarkMode } = useContext(DarkModeContext);
-  // for admin auth
-  const [isAdminLoggedIn, setAdminLoggedIn] = React.useState(false);
 
-  const handleAdminLogin = (isLoggedIn) => {
-    setAdminLoggedIn(isLoggedIn);
-  };
-  
   return (
     <div className={` ${isDarkMode ? "dark" : "light"} h-full`}>
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/blogs" element={<Blogs  />} />
-            <Route path="blog/:slug" element={<Blog  />} />
-            <Route path="/business" element={<Business  />} />
+            <Route path="/blog" element={<Blogs />} />
+            <Route path="blog/:slug" element={<Blog />} />
+            <Route path="/business" element={<Business />} />
 
-            {/* Routes for admin */}
-            <Route
-              path="/admin/*"
-              element={
-                isAdminLoggedIn ? (
-                  // Render the admin routes only if logged in
-                  <Routes>
-                    <Route path="/createblog" element={<Addblogs />} />
-                  </Routes>
-                ) : (
-                  // Redirect to admin login if not logged in
-                  <Navigate to="/admin/login" />
-                )
-              }
-            />
-            <Route path="/admin/login" element={<Adminlogin onLogin={handleAdminLogin} />} />
-           
+            {/* Protected CMS Routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/cms" element={<Cms />} />
+              <Route path="/cms/create" element={<BlogEditor />} />
+              <Route path="/cms/manage" element={<ManageBlogs />} />
+            </Route>
+
+            {/* Admin login */}
+            <Route path="/admin/login" element={<Adminlogin />} />
           </Routes>
         </Suspense>
       </Router>
@@ -54,3 +43,5 @@ function App() {
 }
 
 export default App;
+
+
