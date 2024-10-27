@@ -18,7 +18,8 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
     const fetchBlogs = async () => {
       try {
         const response = await db.listDocuments(cms_db_id, blog_collection_id);
-        setBlog(response.documents);
+        const sortedBlogs = response.documents.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setBlog(sortedBlogs);
         console.log(typeof(blogs[1].content))
       } catch (error) {
         console.error("Error fetching blogs:", error);
@@ -31,7 +32,7 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
   }, []);
 
   return (
-    <div className={`h-fit ${isDarkMode ? "dark" : "light"} flex flex-col`}>
+    <div className={`h-full ${isDarkMode ? "dark" : "light"} flex flex-col`}>
       <Nav toggleMode={toggleMode} isDarkMode={isDarkMode} />
     
 
