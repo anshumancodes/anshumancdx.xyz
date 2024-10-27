@@ -1,6 +1,5 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-
   <!-- Home Page -->
   <url>
     <loc>https://anshumancdx.xyz</loc>
@@ -13,10 +12,38 @@
   <url>
     <loc>https://anshumancdx.xyz/blogs</loc>
     <lastmod>2023-11-30</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>always</changefreq>
     <priority>0.7</priority>
   </url>
 
-  <!-- Add more routes as needed -->
+  <!-- Individual Blog Posts -->
+  <url>
+    <loc>https://anshumancdx.xyz/blog/why_and_how_i_built_this_blog</loc>
+    <lastmod>2024-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://anshumancdx.xyz/blog/introduction_to_http_</loc>
+    <lastmod>2024-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://anshumancdx.xyz/blog/understanding_nodejs_versioning</loc>
+    <lastmod>2024-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://anshumancdx.xyz/blog/node_js_auth_stateless_vs_stateful</loc>
+    <lastmod>2024-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 
 </urlset>
+
