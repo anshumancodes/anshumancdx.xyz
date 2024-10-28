@@ -4,13 +4,9 @@
 
 *{
     -webkit-font-smoothing: antialiased;
-  
-    /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif; */
     font-family: monospace;
     -webkit-tap-highlight-color: none;
 }
-
 
 .dark {
     background-color:#0d1117;
@@ -18,20 +14,8 @@
 }
 
 .light{
-
+    background-color: inherit;
+    color: #0d1117;
    
 
-}
-.darktxt{
-color: #c9d1d9;
-}
-
-
-.line-sep{
-
-background: linear-gradient(180deg,rgba(36,44,55,0),#575d66);
-    border-radius: 60px;
-    height: 100px;
-    margin: 10px auto;
-    width: 4px;
 }
