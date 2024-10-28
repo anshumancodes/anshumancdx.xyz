@@ -7,13 +7,14 @@ import { FaXTwitter } from "react-icons/fa6";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import parse from 'html-react-parser';
 import { Query } from "appwrite";
-
-const Blog = ({ isDarkMode, toggleMode }) => {
+import { useContext } from "react";
+import { DarkModeContext } from "../../context/DarkModeContext";
+const Blog = () => {
   const [blog, setBlog] = useState(null);
   const [readingTime, setReadingTime] = useState(0);
   const [error, setError] = useState(null); // Added state for error handling
   const { slug } = useParams();
-
+  const { isDarkMode } = useContext(DarkModeContext);
   // Function to calculate the read time
   const calculateReadingTime = (text) => {
     const wordsPerMinute = 225; // Adjust as needed
@@ -65,7 +66,7 @@ const Blog = ({ isDarkMode, toggleMode }) => {
   return (
     <>
     <Nav />
-    <div className="h-full flex flex-col w-full items-center">
+    <div className={`h-full flex ${isDarkMode ? "dark" : "light"} flex-col w-full items-center`}>
      
       <span className="w-80c">
         <a href="/blog" aria-label="go back to blogs">
@@ -73,7 +74,7 @@ const Blog = ({ isDarkMode, toggleMode }) => {
         </a>
       </span>
 
-      <article className="flex flex-col w-90c items-center mt-10up">
+      <article className="flex flex-col w-90c items-center mt-10up justify-center">
         <span className="Large:text-left">
           <div className="flex justify-between items-center">
             <div className="flex gap-1">
@@ -98,8 +99,8 @@ const Blog = ({ isDarkMode, toggleMode }) => {
           </h1>
         </span>
        
-        <div className="prose pl-1 pr-1 lg:w-full lg:prose-xl prose-gray mt-5">
-          <p className="prose lg:prose-xl text-gray-600 prose-gray prose-strong:text-gray-400 prose-h2:text-gray-300 prose-h4:text-gray-400">
+        <div className="prose pl-1 pr-1 lg:w-full  mt-5 flex w-full flex-col items-center">
+          <p className="w-[99%] lg:w-full prose lg:prose-xl text-gray-400 prose-gray prose-strong:text-gray-200 prose-h2:text-gray-300 prose-h4:text-gray-400">
             {parse(blog.content)}
           </p>
         </div>
