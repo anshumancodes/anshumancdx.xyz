@@ -1,8 +1,8 @@
 import React, { lazy, Suspense, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { DarkModeContext } from "./context/DarkModeContext";
-import BlogEditor from "./components/blog/BlogEditor";
-import Cms from "./Pages/Cms/Cms";
+
+
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 // Lazy loaded components
@@ -12,6 +12,9 @@ const Adminlogin = lazy(() => import("./components/admin/Adminlogin"));
 const Blogs = lazy(() => import("./components/blog/Blogs"));
 const Business = lazy(() => import("./Pages/business/FreelanceLanding"));
 const ManageBlogs = lazy(() => import("./components/blog/ManageBlogs"));
+const Cms = lazy(() => import("./Pages/Cms/Cms.jsx"));
+const BlogEditor=lazy(()=>import("./components/blog/BlogEditor.jsx"))
+
 
 function App() {
   const { isDarkMode } = useContext(DarkModeContext);
