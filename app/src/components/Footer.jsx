@@ -12,9 +12,11 @@ const Footer = () => {
           </p>
         </div>
         <div className="px-6 py-2 border border-[#33363F] flex gap-1 rounded mt-2">
+          <a href="https://anshumancdx.xyz">
           <p className="text-base font-[100] flex gap-1 ">
             Built by anshumancdx <Star />
           </p>
+          </a>
         </div>
       </div>
 
@@ -22,13 +24,13 @@ const Footer = () => {
         <p className="text-base font-[100] text-[#33363F]">Socials</p>
 
         <div className="flex flex-row ">
-          <a href="https://github.com/anshumancodes" className="px-2 py-2 ">
+          <a href="https://github.com/anshumancodes" className="px-2 py-2 " aria-label="github">
             <GithubIcon />
           </a>
-          <a href="https://x.com/anshumancdx" className="px-2 py-2 ">
+          <a href="https://x.com/anshumancdx" className="px-2 py-2 " aria-label="twitter">
             <Twitter />
           </a>
-          <a href="https://www.linkedin.com/in/anshumancdx/" className="px-2 py-2 ">
+          <a href="https://www.linkedin.com/in/anshumancdx/" className="px-2 py-2 " aria-label="linkedin">
             <Linkedin />
           </a>
         </div>
@@ -41,16 +43,16 @@ const Footer = () => {
         </div>
       </div>
       <div className="flex flex-col">
-        <p className="text-base font-[100] text-[#33363F]">Blog</p>
+        <p className="text-base font-[100]">Blog</p>
         {/* child of /blog */}
 
-        <a href="https://anshumancdx.xyz/blog/understanding-express-middleware" className="text-sm mt-2 font-[100] underline">Express middlewares</a>
-        <a href="https://anshumancdx.xyz/blog/Introduction-to-http-requests" className="text-sm mt-2 font-[100] underline">Introduction to http</a>
-        <a href="https://anshumancdx.xyz/blog/Stateful_and_stateless_authentication" className="text-sm mt-2 font-[100] underline">Stateful vs stateless Auth </a>
+        <a href="https://anshumancdx.xyz/blog/understanding_nodejs_versioning" className="text-sm mt-2 font-[100] underline">understanding nodejs versioning</a>
+        <a href="https://anshumancdx.xyz/blog/https://anshumancdx.xyz/blog/introduction_to_http_" className="text-sm mt-2 font-[100] underline">Introduction to http</a>
+        <a href="https://anshumancdx.xyz/blog/node_js_auth_stateless_vs_stateful" className="text-sm mt-2 font-[100] underline">Stateful vs stateless Auth </a>
      
       </div>
       <div className="flex flex-col">
-      <p className="text-base font-[100] text-[#33363F]">legal</p>
+      <p className="text-base font-[100] ">legal</p>
       {/*child of /legal*/}
       <a href="/privacy-policy" className="text-sm    mt-2 font-[100] underline">Privacy policy</a>
       <a href="/terms-of-service" className="text-sm    mt-2 font-[100] underline">Terms of services</a>
