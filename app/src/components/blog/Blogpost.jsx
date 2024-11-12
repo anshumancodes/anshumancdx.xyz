@@ -64,7 +64,7 @@ const Blogpost = () => {
   return (
     <>
       <Nav />
-      <div className={`h-full flex ${isDarkMode ? "dark" : "light"} flex-col w-full items-center`}>
+      <div className={`h-full flex  flex-col w-full items-center`}>
         
         <span className="w-80c">
           <a href="/blog" aria-label="go back to blogs">

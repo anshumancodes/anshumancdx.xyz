@@ -32,7 +32,7 @@ const Blogs = ({ isDarkMode, toggleMode }) => {
   }, []);
 
   return (
-    <div className={`h-full ${isDarkMode ? "dark" : "light"} flex flex-col`}>
+    <div className={`h-full  flex flex-col`}>
       <Nav toggleMode={toggleMode} isDarkMode={isDarkMode} />
     
 
