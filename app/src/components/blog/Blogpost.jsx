@@ -1,127 +1,154 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
-import { db, cms_db_id, blog_collection_id } from "../../config/appwriteconfig";
-import Nav from "../Nav";
-import { IoMdShare } from "react-icons/io";
-import { FaXTwitter } from "react-icons/fa6";
+import { useState, useEffect ,useContext} from "react";
+import ShareButton from "./ShareButton";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import parse from 'html-react-parser';
+import { Link } from "react-router-dom";
+import { db, cms_db_id, blog_collection_id } from "../../config/appwriteconfig";
+import { useParams } from "react-router-dom";
 import { DarkModeContext } from "../../context/DarkModeContext";
-
-const Blogpost = () => {
-  const [blog, setBlog] = useState(null);
-  const [readingTime, setReadingTime] = useState(0);
-  const [error, setError] = useState(null);
+const BlogPost = () => {
   const { slug } = useParams();
+  const [blog, setBlog] = useState(null);
+  const [error, setError] = useState(null);
+  const [readingTime, setReadingTime] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const blogUrl = `${window.location.origin}/blog/${slug }`;
   const { isDarkMode } = useContext(DarkModeContext);
+ 
 
-  // Function to calculate the read time
   const calculateReadingTime = (text) => {
-    const wordsPerMinute = 225; // Adjust as needed
+    if (!text) return 1;
+    const wordsPerMinute = 225;
     const words = text.trim().split(/\s+/).length;
-    const time = Math.ceil(words / wordsPerMinute);
-    setReadingTime(time);
+    return Math.ceil(words / wordsPerMinute);
   };
 
   useEffect(() => {
     const fetchBlog = async () => {
       try {
+        setLoading(true);
+        // Check if slug exists, use a default if not
+        
         // Fetch blog where document ID matches the slug
         const blogData = await db.getDocument(cms_db_id, blog_collection_id, slug);
         setBlog(blogData);
-        calculateReadingTime(blogData.content);
+        setReadingTime(calculateReadingTime(blogData.content));
       } catch (error) {
         console.error("Error fetching blog:", error);
-        setError("Failed to fetch the blog. Please try again.");
+        setError("Failed to fetch the blog post. Please try again later.");
+      } finally {
+        setLoading(false);
       }
     };
+
     fetchBlog();
   }, [slug]);
 
+  // Better loading state
+  if (loading) {
+    return (
+      <div className="max-w-2xl mx-auto px-6 py-8 flex flex-col min-h-screen">
+        <div className={`${isDarkMode ? "prose-invert" : ""}mb-12 `}>
+          <Link
+            to="/"
+            className="inline-flex items-center text-sm py-1 px-3 border border-gray-700 rounded-full hover:bg-gray-800 transition-colors"
+          >
+            <IoIosArrowRoundBack size={20} className="mr-1" />
+            Back
+          </Link>
+        </div>
+        <div className="animate-pulse space-y-8">
+          <div className="h-6 w-48 bg-gray-800 rounded"></div>
+          <div className="h-12 bg-gray-800 rounded w-full"></div>
+          <div className="space-y-4">
+            <div className="h-4 bg-gray-800 rounded w-full"></div>
+            <div className="h-4 bg-gray-800 rounded w-5/6"></div>
+            <div className="h-4 bg-gray-800 rounded w-4/6"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Better error state
   if (error) {
-    return <p>{error}</p>;
+    return (
+      <div className="max-w-2xl mx-auto px-6 py-8 flex flex-col min-h-screen">
+        <div className="mb-12">
+          <Link
+            to="/"
+            className="inline-flex items-center text-sm py-1 px-3 border border-gray-700 rounded-full hover:bg-gray-800 transition-colors"
+          >
+            <IoIosArrowRoundBack size={20} className="mr-1" />
+            Back
+          </Link>
+        </div>
+        <div className="flex flex-col items-center justify-center text-center py-12">
+          <div className="text-red-500 text-4xl mb-4">⚠️</div>
+          <h2 className="text-xl font-semibold mb-4">Something went wrong</h2>
+          <p className="text-gray-400 mb-6">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
   }
-
-  if (!blog) {
-    return <p>Loading...</p>;
-  }
-
-  // Function to copy the blog link to the clipboard
-  const copyLink = () => {
-    const inputElement = document.createElement("input");
-    inputElement.value = window.location.href;
-    document.body.appendChild(inputElement);
-    inputElement.select();
-    const success = document.execCommand("copy");
-    document.body.removeChild(inputElement);
-    if (success) {
-      alert("Link successfully copied.");
-    } else {
-      alert("Unable to copy to clipboard.");
-    }
-  };
 
   return (
-    <>
-      <Nav />
-      <div className={`h-full flex  flex-col w-full items-center`}>
-        
-        <span className="w-80c">
-          <a href="/blog" aria-label="go back to blogs">
-            <IoIosArrowRoundBack className="text-2x rounded-[50%] border-white-color border-[2px]" />
-          </a>
-        </span>
-
-        <article className="flex flex-col w-90c items-center mt-10up justify-center">
-          <span className="Large:text-left">
-            <div className="flex justify-between items-center">
-              <div className="flex gap-1">
-                <span className="text-sky-500">—</span>
-                <time className="text-gray-400 text-sm">
-                  {new Date(blog.createdAt).toLocaleDateString()}
-                </time>
-                <i></i>
-                <time className="text-gray-400 text-sm">{`${readingTime} min read`}</time>
-              </div>
-              <div className="flex gap-4 text-1x+">
-                <IoMdShare onClick={copyLink} className="cursor-pointer" />
-                <a href="https://twitter.com/anshumancdx" className="cursor-pointer">
-                  <FaXTwitter />
-                </a>
-              </div>
-            </div>
-
-            <h1 className="mt-4 text-xl font-bold flex justify-center w-full Large:text-2x">
-              {blog.title}
-            </h1>
-          </span>
-          
-          <div className="pl-1 pr-1 lg:w-full mt-5 flex w-full flex-col items-center">
-            <p className={`w-[99%] lg:w-full mb-3 prose prose-base prose-zinc ${isDarkMode ? "prose-invert" : ""}`}>
-            {parse(blog.content, {
-  replace(domNode) {
-    if (domNode.attribs && domNode.attribs.style) {
-      // Split the inline style string by `;` and filter out background-related properties
-      const updatedStyle = domNode.attribs.style
-        .split(';')
-        .filter(style => !style.trim().startsWith('background'))
-        .join(';');
-
-      // Update the node's style attribute without any background properties
-      domNode.attribs.style = updatedStyle;
-    }
-
-    return domNode; // Return the modified node
-  }
-})}
-
-            </p>
-          </div>
-        </article>
+    <div className="max-w-2xl mx-auto px-6 py-8 flex flex-col min-h-screen">
+      <div className="mb-12">
+        <Link
+          to="/"
+          className="inline-flex items-center text-sm py-1 px-3 border border-gray-700 rounded-full hover:bg-gray-800 transition-colors"
+        >
+          <IoIosArrowRoundBack size={20} className="mr-1" />
+          Back
+        </Link>
       </div>
-    </>
+
+      <article className="flex-1">
+        <header className="mb-12">
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center gap-2 text-gray-400 text-sm">
+              <span className="text-blue-500">—</span>
+              <time dateTime={blog?.date || "2023-01-21"}>
+                {blog?.date || "January 21, 2023"}
+              </time>
+              <span>·</span>
+              <span>{readingTime} min read</span>
+            </div>
+            <ShareButton url={blogUrl} title={blog?.title || "Blog Post"} />
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl font-bold mb-6 tracking-tight">
+            {blog?.title || "Hello, World | Gianmarco Cavallo"}
+          </h1>
+        </header>
+
+        <div className="space-y-6 text-lg">
+          {blog?.content ? (
+            <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+          ) : (
+            <>
+              <h2 className="text-2xl font-bold mb-4">Hi there!</h2>
+              <p>This Markdown file creates a page at <span className="highlight">your-domain.com/blog/post1</span></p>
+              <p>It probably isn't styled much, but Markdown does support:</p>
+              <ul className="list-disc pl-5 space-y-1">
+                <li><strong>bold</strong> and <em>italics</em>.</li>
+                <li>lists</li>
+                <li><a href="#" className="text-blue-400 hover:underline">links</a></li>
+                <li>and more!</li>
+              </ul>
+            </>
+          )}
+        </div>
+      </article>
+    </div>
   );
 };
 
-export default Blogpost;
+export default BlogPost;
 
