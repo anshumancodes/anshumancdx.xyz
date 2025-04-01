@@ -1,78 +1,144 @@
 import React, { useState, useEffect } from "react";
-import Nav from "../Nav";
-
-import { db, cms_db_id, blog_collection_id,ID } from "../../config/appwriteconfig";
-import parse from 'html-react-parser';
-
 import { Link } from "react-router-dom";
+import { db, cms_db_id, blog_collection_id } from "../../config/appwriteconfig";
 
-import Footer from "../Footer";
-
-
-
-
-const Blogs = ({ isDarkMode, toggleMode }) => {
-  const [blogs, setBlog] = useState();
+const BlogPosts = () => {
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
+        setLoading(true);
         const response = await db.listDocuments(cms_db_id, blog_collection_id);
-        const sortedBlogs = response.documents.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setBlog(sortedBlogs);
-        console.log(typeof(blogs[1].content))
+        const sortedBlogs = response.documents.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setBlogs(sortedBlogs);
       } catch (error) {
         console.error("Error fetching blogs:", error);
         setError("Failed to fetch blogs. Please try again.");
-
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchBlogs();
   }, []);
 
-  return (
-    <div className={`h-full  flex flex-col`}>
-      <Nav toggleMode={toggleMode} isDarkMode={isDarkMode} />
-    
-
-      <section className="py-20">
-        <h1 className="mb-12 text-center text-5xl font-bold">
-          Recent Posts
-        </h1>
-        <div className="mx-auto grid max-w-screen-lg grid-cols-1 gap-5 p-5 sm:grid-cols-2 md:grid-cols-3 lg:gap-10">
-          {blogs ? (
-            blogs.length > 0 ? (
-              blogs.map((blog) => (
-                <div className=" rounded-lg shadow-md  overflow-hidden" style={{ height: '400px' }}>
-                <div className="h-[20vh]">
-                  <img src={blog.coverImg} alt={blog.title} className="h-[80%] w-full object-cover" />
-                </div>
-                <div className="px-5">
-                 
-                  <h2 className="text-2xl mb-2">{blog.title}</h2>
-                  <p className="text-gray-600">{blog.content ? parse(blog.content.replace(/<figure.*?>.*?<\/figure>/, '').slice(0,100)+" ..."): "No Blog intro found"}</p>
-                  <a href={`/blog/${blog.$id}`} className="text-blue-500 block mt-3">Read more</a>
-                </div>
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-black text-white p-8">
+        <div className="max-w-4xl mx-auto">
+          <Link
+            to="/"
+            className="inline-block px-4 py-2 mb-8 border border-gray-700 rounded-md text-gray-300 hover:bg-gray-800 transition-colors"
+          >
+            Back
+          </Link>
+          <h1 className="text-4xl font-bold mb-8">Posts</h1>
+          <div className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="flex justify-between items-center py-3 border-b border-dotted border-gray-700"
+              >
+                <div className="bg-gray-800 h-6 w-32 rounded animate-pulse"></div>
+                <div className="bg-gray-800 h-4 w-24 rounded animate-pulse"></div>
               </div>
-            
-              ))
-            ) : (
-              <p className="w-full flex justify-center items-center h-full">
-                No blogs available
-              </p>
-            )
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-black text-white p-8">
+        <div className="max-w-4xl mx-auto">
+          <Link
+            to="/"
+            className="inline-block px-4 py-2 mb-8 border border-gray-700 rounded-md text-gray-300 hover:bg-gray-800 transition-colors"
+          >
+            Back
+          </Link>
+          <div className="text-center py-8">
+            <p className="text-red-400 mb-4">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-black text-white p-8">
+      <div className="max-w-4xl mx-auto">
+        {/* Back button */}
+        <Link
+          to="/"
+          className="inline-block px-4 py-2 mb-8 border border-gray-700 rounded-md text-gray-300 hover:bg-gray-800 transition-colors"
+        >
+          Back
+        </Link>
+
+        {/* Posts header */}
+        <h1 className="text-4xl font-bold mb-8">Posts</h1>
+
+        {/* Posts list */}
+        <div className="space-y-1">
+          {blogs.length > 0 ? (
+            blogs.map((blog) => (
+              <div
+                key={blog.$id}
+                className="flex justify-between items-center py-3 border-b border-dotted border-gray-700"
+              >
+                <Link
+                  to={`/blog/${blog.$id}`}
+                  className="text-blue-400 hover:text-blue-300 transition-colors"
+                >
+                  {blog.title}
+                </Link>
+                <span className="text-gray-400">
+                  {new Date(blog.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
+              </div>
+            ))
           ) : (
-            <p className="w-full flex justify-center items-center">
-             Loading....
-            </p>
+            <div>
+              <p className="text-center py-4 text-gray-400">
+                No posts available
+              </p>
+              <div className="flex flex-col items-center justify-center text-center py-12">
+                <div className="text-red-500 text-4xl mb-4">⚠️</div>
+                <h2 className="text-xl font-semibold mb-4">
+                  Something went wrong
+                </h2>
+                <p className="text-gray-400 mb-6">{error}</p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                > 
+                  Try Again
+                </button>
+              </div>
+            </div>
           )}
         </div>
-      </section>
-
-      <Footer />
+      </div>
     </div>
   );
 };
 
-export default Blogs;
+export default BlogPosts;
