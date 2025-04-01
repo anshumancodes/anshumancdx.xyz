@@ -6,26 +6,38 @@ const BlogPosts = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  
   useEffect(() => {
+    let isMounted = true; // Flag to prevent state updates if unmounted
+  
     const fetchBlogs = async () => {
       try {
-        setLoading(true);
         const response = await db.listDocuments(cms_db_id, blog_collection_id);
-        const sortedBlogs = response.documents.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
-        setBlogs(sortedBlogs);
+  
+        if (isMounted) {
+          const sortedBlogs = response.documents
+            .slice() // Prevent mutation of the original array
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  
+          setBlogs(sortedBlogs);
+          setLoading(false);
+        }
       } catch (error) {
-        console.error("Error fetching blogs:", error);
-        setError("Failed to fetch blogs. Please try again.");
-      } finally {
-        setLoading(false);
+        if (isMounted) {
+          console.error("Error fetching blogs:", error);
+          setError("Failed to fetch blogs. Please try again.");
+          setLoading(false);
+        }
       }
     };
-
+  
     fetchBlogs();
+  
+    return () => {
+      isMounted = false; // Cleanup
+    };
   }, []);
+  
 
   if (loading) {
     return (
