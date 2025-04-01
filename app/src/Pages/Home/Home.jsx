@@ -1,146 +1,283 @@
 import React, { useState, useEffect } from "react";
-import Nav from "../../components/Nav";
-import BlogCard from "../../components/landing/BlogCard";
-import RepoCard from "../../components/landing/RepoCard";
-import Footer from "../../components/Footer";
 import { db, cms_db_id, blog_collection_id } from "../../config/appwriteconfig";
-import { ArrowUpRightFromCircle } from "lucide-react";
+import { Link } from "react-router-dom";
+import {
+  Github,
+  Linkedin,
+  Dribbble,
+  MessageCircle,
+  ExternalLink,
+  ArrowUpRight,
+} from "lucide-react";
 
 const Home = () => {
-  const [repos, setRepos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [repoError, setRepoError] = useState(null);
+  const [currentTime, setCurrentTime] = useState(new Date());
   const [blogs, setBlogs] = useState([]);
-  const [blogLoading, setBlogLoading] = useState(true);
-  const [blogError, setBlogError] = useState(null);
-
-  const selectedRepoNames = ["youtube-backend", "youtube-client"]; // Example repos
-
-  // Fetching GitHub Repos
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  
   useEffect(() => {
-    const fetchAllRepos = async () => {
-      setLoading(true);
-      let page = 1;
-      let allRepos = [];
-
-      try {
-        while (true) {
-          const response = await fetch(
-            `https://api.github.com/users/anshumancodes/repos?per_page=100&page=${page}`
-          );
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const data = await response.json();
-          if (data.length === 0) break;
-
-          allRepos = [...allRepos, ...data];
-          page++;
-
-          // Check if we've fetched all repos (in case the total is exactly a multiple of 100)
-          const linkHeader = response.headers.get("Link");
-          if (!linkHeader || !linkHeader.includes('rel="next"')) {
-            break;
-          }
-        }
-
-        setRepos(allRepos);
-      } catch (error) {
-        console.error("Error fetching repos:", error);
-        setRepoError("Failed to fetch repositories. Please try again later.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAllRepos();
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+  
+    return () => clearInterval(timer);
   }, []);
-
-  const filteredRepos = repos.filter((repo) => selectedRepoNames.includes(repo.name));
-
-  // Fetching Blogs
+  
   useEffect(() => {
+    let isMounted = true; // Prevent state updates if unmounted
+  
     const fetchBlogs = async () => {
-      setBlogLoading(true);
       try {
         const response = await db.listDocuments(cms_db_id, blog_collection_id);
-        setBlogs(response.documents);
+  
+        if (isMounted) {
+          const sortedBlogs = response.documents
+            .slice() // Avoid mutating the original array
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  
+          setBlogs(sortedBlogs.slice(0, 4));
+          setLoading(false);
+        }
       } catch (error) {
-        console.error("Error fetching blogs:", error);
-        setBlogError("Failed to fetch blogs. Please try again.");
-      } finally {
-        setBlogLoading(false);
+        if (isMounted) {
+          console.error("Error fetching blogs:", error);
+          setError("Failed to fetch blogs. Please try again.");
+          setLoading(false);
+        }
       }
     };
-
+  
     fetchBlogs();
-  }, []);
+  
+    return () => {
+      isMounted = false; // Cleanup function to prevent state updates after unmount
+    };
+  }, []); // ✅ Removed `[blogs]` dependency to prevent infinite loop
+  
+  
+
+  const formattedTime = currentTime.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true,
+    timeZone: "Asia/Kolkata",
+  });
 
   return (
-    <main className="">
-      <Nav />
-      <div className="flex flex-col justify-center px-5 md:px-[200px] lg:px-[400px] mt-10">
-        <div>
-          <h1 className="text-4xl font-bold">Hey there, it's Anshuman</h1>
-          <p className="lg:w-[600px] mt-2">
-            Software developer from India. Working with JavaScript and Python. Currently exploring core CS concepts and building projects (checkout those on GitHub).
-          </p>
-          <p className="flex gap-1 mt-2">
-            Want to hire me as a freelance developer?
-            <ArrowUpRightFromCircle />
-            <a href="/business" className="underline">/business</a>
-          </p>
-        </div>
+    <div className="bg-black text-white min-h-screen p-4 md:p-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-4">
+        {/* Welcome Card - spans 8 columns */}
+        <div className="md:col-span-8 bg-zinc-900 rounded-lg p-6 flex flex-col md:flex-row">
+          <div className="flex-1">
+            <div className="text-zinc-500 text-sm mb-2">Welcome</div>
+            <h1 className="text-2xl mb-2">
+              Hey there, I am{" "}
+              <span className="text-white font-bold">Anshuman Praharaj</span>
+            </h1>
+            <p className="text-zinc-400">
+              Software developer from India, working with JavaScript and Python.
+              Exploring core CS concepts, while building cool projects—check
+              them out on
+              <Link to="https://github.com/anshumancodes">
+                {" "}
+                <span className="text-green-500 underline">GitHub!</span>
+              </Link>
+            </p>
 
-        {/* Featured Projects */}
-        <div className="mt-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2">Featured Projects</h2>
-          {loading ? (
-            <p>Loading repositories...</p>
-          ) : repoError ? (
-            <p>{repoError}</p>
-          ) : (
-            <div>
-              {filteredRepos.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filteredRepos.map((repo) => (
-                    <RepoCard key={repo.id} repo={repo} />
-                  ))}
-                </div>
-              ) : (
-                <p className="text-gray-600">
-                  No selected repositories found. Check selectedRepoNames array.
-                </p>
-              )}
+            {/* Social Links */}
+            <div className="flex space-x-2 mt-6">
+              <a
+                href="https://github.com/anshumancodes"
+                className="w-10 h-10 flex items-center justify-center rounded border border-blue-500 text-white"
+              >
+                <Github size={18} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/anshumancdx/"
+                className="w-10 h-10 flex items-center justify-center rounded border border-blue-500 text-white"
+                
+              >
+                <Linkedin size={18} />
+              </a>
+             
+             
             </div>
-          )}
+          </div>
+          <div className="flex items-center justify-center mt-4 md:mt-0">
+            <div className="relative w-32 h-32 md:w-40 md:h-40">
+              <img
+                src="https://res.cloudinary.com/denzlvzte/image/upload/v1743449060/m3g7hrf1zicbp0p1ot1a.png"
+                alt="Anshuman's profile"
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Latest Blog Posts */}
-        <div className="mt-8 mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold mb-2 text-center">
-            Latest Blog Posts
+        {/* About Me Card - spans 4 columns */}
+        <div className="md:col-span-4 bg-zinc-900 rounded-lg p-6">
+          <h2 className="text-xl font-bold mb-4">About me</h2>
+          <p className="text-sm text-zinc-400 mb-2">
+            Hi, I'm Anshuman, a software developer from India. My primary tools
+            of choice includes:
+          </p>
+          <ul className="space-y-1 mb-4">
+            <li className="flex items-center text-sm">
+              <span className="w-1 h-1 bg-yellow-500 rounded-full mr-2"></span>
+              JavaScript
+            </li>
+            <li className="flex items-center text-sm">
+              <span className="w-1 h-1 bg-blue-500 rounded-full mr-2"></span>
+              React
+            </li>
+            <li className="flex items-center text-sm">
+              <span className="w-1 h-1 bg-white rounded-full mr-2"></span>
+              Express
+            </li>
+            <li className="flex items-center text-sm">
+              <span className="w-1 h-1 bg-blue-700 rounded-full mr-2"></span>
+              postgres
+            </li>
+            <li className="flex items-center text-sm">
+              <span className="w-1 h-1 bg-green-400 rounded-full mr-2"></span>
+              MongoDB
+            </li>
+            <li className="flex items-center text-sm">
+              <span className="w-1 h-1 bg-green-500 rounded-full mr-2"></span>
+              Nodejs
+            </li>
+          </ul>
+          <p className="text-sm text-zinc-400">
+            Beyond coding, I'm passionate about contributing to tech
+            communities, exploring new technologies, read blogs etc.
+          </p>
+        </div>
+
+        {/* Contact Card */}
+        <div className="md:col-span-3 bg-zinc-900 rounded-lg p-6">
+          <h2 className="text-xl font-bold mb-4">
+            Let's start working together!
           </h2>
-          <div className="w-24 h-1 bg-blue-500 mx-auto mb-8"></div>
-          {blogLoading ? (
-            <p>Loading blogs...</p>
-          ) : blogError ? (
-            <p className="text-center">{blogError}</p>
-          ) : blogs.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {blogs.slice(-3).map((blog) => (
-                <BlogCard key={blog.$id} blog={blog} />
-              ))}
+          <div className="mb-6">
+            <div className="text-zinc-500 text-sm mb-1">Contact Details</div>
+            <div className="text-zinc-300">anshumanprof01@gmail.com</div>
+            <div className="text-zinc-300">India</div>
+          </div>
+          <div>
+            <div className="text-zinc-500 text-sm mb-1">Socials</div>
+            <a
+              href="https://www.linkedin.com/in/anshumancdx/"
+              className="block text-zinc-300 hover:text-white"
+            >
+              Linkedin
+            </a>
+            <a
+              href="https://github.com/anshumancodes"
+              className="block text-zinc-300 hover:text-white"
+            >
+              Github
+            </a>
+            <a
+              href="https://hashnode.com/@anshcds"
+              className="block text-zinc-300 hover:text-white"
+            >
+              Hashnode
+            </a>
+            <a
+              href="https://discord.com/users/thelazymonkee"
+              className="block text-zinc-300 hover:text-white"
+            >
+              Discord
+            </a>
+          </div>
+        </div>
+
+        {/* Time zone Card */}
+        <div className="md:col-span-3 grid grid-rows-2 gap-4 px-2">
+          <div className="bg-zinc-900 rounded-lg p-2">
+            <div className="text-xl font-bold mb-2">Time zone</div>
+            <div className="text-2xl font-light text-center text-white flex items-start">
+              {formattedTime} IST
             </div>
-          ) : (
-            <p className="text-gray-600 text-center">No blog posts available at the moment.</p>
-          )}
+          </div>
+          <div className="relative bg-zinc-900 rounded-lg p-2 flex items-center justify-center">
+            <img
+              src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGJ1ZDV5YWlpd2Njd2h2dXBoaWwxaHF2d2kzbGhleWVkZnI5ZWxtbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Ws6T5PN7wHv3cY8xy8/giphy.gif"
+              alt="Github Animation"
+              className="w-full h-full object-cover rounded-lg"
+            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-xl font-bold flex gap-2 text-white z-10">
+                github <ArrowUpRight />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Blog Card */}
+        <div className="md:col-span-6 bg-zinc-900 rounded-lg p-6 relative">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-sm font-medium">Blog</h2>
+            <Link to="/blog">
+              <ExternalLink size={16} />
+            </Link>
+          </div>
+          <div className="space-y-4">
+            {loading ? (
+              // Loading skeleton: three placeholder items
+              <>
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="animate-pulse space-y-2">
+                    <div className="h-6 bg-gray-700 rounded w-3/4"></div>
+                    <div className="border-b border-dotted border-gray-500"></div>
+                    <div className="h-4 bg-gray-600 rounded w-1/2"></div>
+                  </div>
+                ))}
+              </>
+            ) : blogs.length > 0 ? (
+              blogs.map((blog) => (
+                <div key={blog.$id}>
+                  <Link
+                    to={`/blog/${blog.$id}`}
+                    className="text-blue-400 hover:text-blue-300 transition-colors"
+                  >
+                    <p className="text-zinc-300">{blog.title}</p>
+                  </Link>
+                  <div className="border-b border-dotted border-zinc-700 mt-1 mb-1"></div>
+                  <p className="text-xs text-zinc-500">
+                    {new Date(blog.createdAt).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>Error loading</p>
+            )}
+          </div>
+        </div>
+        {/* Status Card */}
+        <div className="md:col-span-6 bg-zinc-900 rounded-lg p-6">
+          <div className="text-sm font-medium mb-1">Now</div>
+          <div className="text-zinc-500 text-sm">what's that?</div>
+          <div className="flex items-center mt-4">
+            <div className="w-3 h-3 bg-green-400 rounded-full mr-3"></div>
+            <div className="text-zinc-300">Currently working as a freelancer</div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="md:col-span-6 bg-zinc-900 rounded-lg p-4 flex items-center justify-center">
+          <div className="text-xs text-zinc-500">
+            © {new Date().getFullYear()} · Crafted with ♥ using React by Anshuman.
+          </div>
         </div>
       </div>
-      <Footer />
-    </main>
+    </div>
   );
 };
 
