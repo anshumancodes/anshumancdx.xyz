@@ -9,13 +9,14 @@ import {
   ExternalLink,
   ArrowUpRight,
 } from "lucide-react";
+import Newsletter from "../../components/blog/Newsletter";
 
 const Home = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [blogs, setBlogs] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  
+  const publicationId=import.meta.env.VITE_PUBLICATION_ID;
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
@@ -101,6 +102,8 @@ const Home = () => {
               >
                 <Linkedin size={18} />
               </a>
+
+              
              
              
             </div>
@@ -262,12 +265,7 @@ const Home = () => {
         </div>
         {/* Status Card */}
         <div className="md:col-span-6 bg-zinc-900 rounded-lg p-6">
-          <div className="text-sm font-medium mb-1">Now</div>
-          <div className="text-zinc-500 text-sm">what's that?</div>
-          <div className="flex items-center mt-4">
-            <div className="w-3 h-3 bg-green-400 rounded-full mr-3"></div>
-            <div className="text-zinc-300">Currently working as a freelancer</div>
-          </div>
+        <Newsletter publicationId={publicationId}/>
         </div>
 
         {/* Footer */}
