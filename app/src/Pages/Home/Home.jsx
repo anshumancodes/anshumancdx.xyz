@@ -205,7 +205,8 @@ const Home = () => {
               {formattedTime} IST
             </div>
           </div>
-          <div className="relative bg-zinc-900 rounded-lg p-2 flex items-center justify-center">
+          <a href="https://github.com/anshumancodes">
+            <div className="relative bg-zinc-900 rounded-lg p-2 flex items-center justify-center">
             <img
               src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGJ1ZDV5YWlpd2Njd2h2dXBoaWwxaHF2d2kzbGhleWVkZnI5ZWxtbiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Ws6T5PN7wHv3cY8xy8/giphy.gif"
               alt="Github Animation"
@@ -217,6 +218,7 @@ const Home = () => {
               </div>
             </div>
           </div>
+          </a>
         </div>
 
         {/* Blog Card */}
