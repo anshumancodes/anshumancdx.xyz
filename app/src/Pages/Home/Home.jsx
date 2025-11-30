@@ -8,6 +8,8 @@ import {
   MessageCircle,
   ExternalLink,
   ArrowUpRight,
+  Coffee,
+  FolderGit2,
 } from "lucide-react";
 import Newsletter from "../../components/blog/Newsletter";
 
@@ -102,10 +104,24 @@ const Home = () => {
               >
                 <Linkedin size={18} />
               </a>
+              <a
+                href="https://buymeacoffee.com/anshumancdx"
+                className="w-10 h-10 flex items-center justify-center rounded border border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-white transition-colors"
+                title="Buy me a coffee"
+              >
+                <Coffee size={18} />
+              </a>
+            </div>
 
-              
-             
-             
+            {/* Contact Details Moved Here */}
+            <div className="mt-8">
+               <h2 className="text-xl font-bold mb-2">
+                Let's start working together!
+              </h2>
+              <div className="flex flex-col gap-1">
+                 <div className="text-zinc-300">anshumanprof01@gmail.com</div>
+                 <div className="text-zinc-300">India</div>
+              </div>
             </div>
           </div>
           <div className="flex items-center justify-center mt-4 md:mt-0">
@@ -158,45 +174,6 @@ const Home = () => {
           </p>
         </div>
 
-        {/* Contact Card */}
-        <div className="md:col-span-3 bg-zinc-900 rounded-lg p-6">
-          <h2 className="text-xl font-bold mb-4">
-            Let's start working together!
-          </h2>
-          <div className="mb-6">
-            <div className="text-zinc-500 text-sm mb-1">Contact Details</div>
-            <div className="text-zinc-300">anshumanprof01@gmail.com</div>
-            <div className="text-zinc-300">India</div>
-          </div>
-          <div>
-            <div className="text-zinc-500 text-sm mb-1">Socials</div>
-            <a
-              href="https://www.linkedin.com/in/anshumancdx/"
-              className="block text-zinc-300 hover:text-white"
-            >
-              Linkedin
-            </a>
-            <a
-              href="https://github.com/anshumancodes"
-              className="block text-zinc-300 hover:text-white"
-            >
-              Github
-            </a>
-            <a
-              href="https://hashnode.com/@anshcds"
-              className="block text-zinc-300 hover:text-white"
-            >
-              Hashnode
-            </a>
-            <a
-              href="https://discord.com/users/thelazymonkee"
-              className="block text-zinc-300 hover:text-white"
-            >
-              Discord
-            </a>
-          </div>
-        </div>
-
         {/* Time zone Card */}
         <div className="md:col-span-3 grid grid-rows-2 gap-4 px-2">
           <div className="bg-zinc-900 rounded-lg p-2">
@@ -222,7 +199,7 @@ const Home = () => {
         </div>
 
         {/* Blog Card */}
-        <div className="md:col-span-6 bg-zinc-900 rounded-lg p-6 relative">
+        <div className="md:col-span-9 bg-zinc-900 rounded-lg p-6 relative">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-sm font-medium">Blog</h2>
             <Link to="/blog">
@@ -265,13 +242,38 @@ const Home = () => {
             )}
           </div>
         </div>
-        {/* Status Card */}
+        {/* Newsletter Card */}
         <div className="md:col-span-6 bg-zinc-900 rounded-lg p-6">
         <Newsletter publicationId={publicationId}/>
         </div>
 
+        {/* Projects Card */}
+        <div className="md:col-span-6 bg-zinc-900 rounded-lg p-6 flex flex-col justify-between">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold flex items-center gap-2">
+              <FolderGit2 size={24} className="text-purple-500" />
+              Projects
+            </h2>
+            <a
+              href="https://github.com/anshumancodes?tab=repositories"
+              className="text-zinc-400 hover:text-white transition-colors"
+            >
+              <ExternalLink size={16} />
+            </a>
+          </div>
+          <p className="text-zinc-400 text-sm mb-4">
+            Check out my latest projects on GitHub, including web apps, tools, and experiments.
+          </p>
+          <a
+            href="https://github.com/anshumancodes?tab=repositories"
+            className="inline-flex items-center text-purple-400 hover:text-purple-300 transition-colors text-sm"
+          >
+            View all projects <ArrowUpRight size={14} className="ml-1" />
+          </a>
+        </div>
+
         {/* Footer */}
-        <div className="md:col-span-6 bg-zinc-900 rounded-lg p-4 flex items-center justify-center">
+        <div className="md:col-span-12 bg-zinc-900 rounded-lg p-4 flex items-center justify-center">
           <div className="text-xs text-zinc-500">
             © {new Date().getFullYear()} · Crafted with ♥ using React by Anshuman.
           </div>
