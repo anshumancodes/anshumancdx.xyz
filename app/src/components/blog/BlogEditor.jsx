@@ -4,6 +4,7 @@ import editorConfig from "./BlogeditorConfig";
 import { ClassicEditor } from "ckeditor5";
 import { cms_db_id, blog_collection_id, db } from "../../config/appwriteconfig";
 import { Permission, Role } from "appwrite";
+import { Save, FileText, Image as ImageIcon, Link as LinkIcon } from "lucide-react";
 
 import "ckeditor5/ckeditor5.css";
 
@@ -82,76 +83,133 @@ const BlogEditor = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="mt-10">
-        {errorCreating && (
-          <span className="bg-red-500 text-white px-4 py-2">Unable to create an article document!</span>
-        )}
-        {createdSuccess && (
-          <span className="bg-green-500 text-white px-4 py-2">Successfully created an article document!</span>
-        )}
-        {Draft && (
-          <span className="bg-gray-500 text-white px-4 py-2">Successfully saved as draft!</span>
-        )}
-      </div>
-
-      <div className="main-container font-lato w-fit mx-auto">
-        <div className="flex flex-col gap-2">
-          <input
-            type="text"
-            placeholder="Write slug"
-            value={slug}
-            className="ml-[42px] mt-5 mb-5 py-2 px-5 min-w-[795px] max-w-[795px] border border-slate-400 outline-none"
-            onChange={handleSlugChange}
-          />
-          <input
-            type="text"
-            placeholder="Write blog title"
-            value={title}
-            className="ml-[42px] mt-5 mb-5 py-2 px-5 min-w-[795px] max-w-[795px] border border-slate-400 outline-none"
-            onChange={handleTitleChange}
-          />
-          <input
-            type="datetime-local"
-            className="ml-[42px] mt-5 mb-5 py-2 px-5 min-w-[795px] max-w-[795px] border border-slate-400 outline-none"
-            onChange={handleDateChange}
-          />
-          <input
-            type="url"
-            className="ml-[42px] mt-5 mb-5 py-2 px-5 min-w-[795px] max-w-[795px] border border-slate-400 outline-none"
-            placeholder="enter cover img url"
-            onChange={handlecoverImgChange}
-          />
-        </div>
-
-        <div className="editor-container min-w-[795px] max-w-[795px] ml-[42px]" ref={editorContainerRef}>
-          <div className="editor-container__editor min-w-[795px] max-w-[795px]">
-            <div ref={editorRef}>
-              {isLayoutReady && (
-                <CKEditor
-                  editor={ClassicEditor}
-                  config={editorConfig}
-                  onChange={(event, editor) => setContent(editor.getData())}
-                />
-              )}
-            </div>
+    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-zinc-900 p-8 transition-colors duration-300">
+      <div className="max-w-5xl mx-auto w-full">
+        
+        {/* Header */}
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Create New Post</h1>
+            <p className="text-gray-500 dark:text-gray-400 mt-1">Write and publish your latest thoughts.</p>
+          </div>
+          <div className="flex gap-3">
+            <button
+              className="flex items-center gap-2 px-4 py-2 bg-gray-200 dark:bg-zinc-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-zinc-700 transition-colors font-medium"
+              onClick={() => setDraft(true)}
+            >
+              <Save size={18} />
+              Save Draft
+            </button>
+            <button
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={createBlog}
+              disabled={!title || !content || !slug}
+            >
+              <FileText size={18} />
+              Publish Post
+            </button>
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 mt-5">
-          <button
-            className="px-4 py-2 bg-green-500 text-white ml-[42px]"
-            onClick={createBlog}
-            disabled={!title || !content || !slug}
-          >
-            Create blog
-          </button>
-          <button
-            className="px-4 py-2 bg-gray-400 text-white ml-[42px]"
-            onClick={() => setDraft(true)}
-          >
-            Save as Draft
-          </button>
+        {/* Notifications */}
+        <div className="mb-6">
+          {errorCreating && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative animate-fade-in">
+              Unable to create article! Please check all fields.
+            </div>
+          )}
+          {createdSuccess && (
+            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative animate-fade-in">
+              Successfully created the article!
+            </div>
+          )}
+          {Draft && (
+            <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded relative animate-fade-in">
+              Draft saved successfully!
+            </div>
+          )}
+        </div>
+
+        {/* Main Form */}
+        <div className="bg-white dark:bg-zinc-800 rounded-xl shadow-sm border border-gray-200 dark:border-zinc-700 p-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            {/* Title */}
+            <div className="col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Blog Title
+              </label>
+              <input
+                type="text"
+                placeholder="Enter an engaging title..."
+                value={title}
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                onChange={handleTitleChange}
+              />
+            </div>
+
+            {/* Slug */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Slug (URL)
+              </label>
+              <div className="relative">
+                <LinkIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+                <input
+                  type="text"
+                  placeholder="post-url-slug"
+                  value={slug}
+                  className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all font-mono text-sm"
+                  onChange={handleSlugChange}
+                />
+              </div>
+            </div>
+
+            {/* Date */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Publish Date
+              </label>
+              <input
+                type="datetime-local"
+                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                onChange={handleDateChange}
+              />
+            </div>
+
+            {/* Cover Image */}
+            <div className="col-span-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Cover Image URL
+              </label>
+              <div className="relative">
+                <ImageIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                <input
+                  type="url"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 dark:border-zinc-600 bg-white dark:bg-zinc-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"
+                  placeholder="https://example.com/image.jpg"
+                  onChange={handlecoverImgChange}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Editor */}
+          <div className="prose-editor">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Content
+            </label>
+            <div className="editor-container border border-gray-300 dark:border-zinc-600 rounded-lg overflow-hidden" ref={editorContainerRef}>
+              <div className="editor-container__editor" ref={editorRef}>
+                {isLayoutReady && (
+                  <CKEditor
+                    editor={ClassicEditor}
+                    config={editorConfig}
+                    onChange={(event, editor) => setContent(editor.getData())}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -159,4 +217,3 @@ const BlogEditor = () => {
 };
 
 export default BlogEditor;
-
