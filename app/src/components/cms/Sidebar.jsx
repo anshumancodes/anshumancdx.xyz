@@ -1,136 +1,122 @@
-import React, { useState ,useContext } from "react";
-import {Edit} from "lucide-react"
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { DarkModeContext } from "../../context/DarkModeContext";
-import { Sun ,Moon } from "lucide-react";
+import { 
+  Sun, 
+  Moon, 
+  LayoutDashboard, 
+  FileText, 
+  PlusCircle, 
+  Settings, 
+  ChevronDown,
+  LogOut
+} from "lucide-react";
 
 const Sidebar = () => {
-  const [isAnalyticsOpen, setIsAnalyticsOpen] = useState(false);
+  const [isAnalyticsOpen, setIsAnalyticsOpen] = useState(true);
   const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext);
+  const location = useLocation();
 
   const toggleAnalytics = () => {
     setIsAnalyticsOpen(!isAnalyticsOpen);
   };
 
+  const isActive = (path) => location.pathname.includes(path);
+
   return (
-    <div>
-      <div className=" bg-gray-100">
-        <div className="h-screen w-64">
-          <div className="flex h-full flex-grow flex-col overflow-y-auto rounded-br-lg rounded-tr-lg bg-white pt-5 shadow-md">
-          <a title="" class="flex cursor-pointer items-center border-l-4 border-l-blue-600 py-2 px-4 text-sm font-medium text-blue-600 outline-none transition-all duration-100 ease-in-out focus:border-l-4">
-            <svg class="mr-4 h-5 w-5 align-middle" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" class=""></path>
-            </svg>
-            Dashboard
-          </a>
-          <span className="flex items-center gap-2 px-4 py-2 border-y border-gray-400">toggle mode :<button onClick={toggleDarkMode} className=" rounded-lg p-1">
-          {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
-        </button></span>
+    <div className="h-screen w-64 flex flex-col bg-zinc-950 text-zinc-400 border-r border-zinc-800 transition-all duration-300">
+      {/* Header */}
+      <div className="p-6 flex items-center justify-between border-b border-zinc-900">
+        <div className="flex items-center gap-3 font-bold text-xl text-white">
+          <div className="p-2 bg-blue-600 rounded-lg">
+            <LayoutDashboard size={20} className="text-white" />
+          </div>
+          <span>CMS</span>
+        </div>
+        <button 
+          onClick={toggleDarkMode} 
+          className="p-2 rounded-lg hover:bg-zinc-900 text-zinc-500 hover:text-zinc-300 transition-colors"
+          title="Toggle Theme"
+        >
+          {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
+      </div>
 
+      {/* Navigation */}
+      <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1">
+        <div className="px-3 mb-3">
+          <span className="text-xs font-bold text-zinc-600 uppercase tracking-wider">
+            Content Management
+          </span>
+        </div>
 
+        {/* Blogs Dropdown */}
+        <div>
+          <button
+            onClick={toggleAnalytics}
+            className={`w-full flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 group ${
+              isActive('/cms') 
+                ? 'bg-zinc-900 text-white' 
+                : 'hover:bg-zinc-900/50 hover:text-zinc-200'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <FileText size={18} className={isActive('/cms') ? 'text-blue-500' : 'text-zinc-500 group-hover:text-zinc-400'} />
+              <span>Blogs</span>
+            </div>
+            <ChevronDown 
+              size={16} 
+              className={`text-zinc-600 transition-transform duration-200 ${isAnalyticsOpen ? 'rotate-180' : ''}`} 
+            />
+          </button>
 
-            <span className="ml-3 mt-10 mb-2 block text-xs font-semibold text-gray-500">
-              Content Management
-            </span>
-
-            <div className="flex mt-3 flex-1 flex-col">
-              <div className="">
-                <nav className="flex-1">
-                  <a
-                    href="#"
-                    className="flex cursor-pointer items-center border-l-blue-600 py-2 px-4 text-sm font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out hover:border-l-4 hover:border-l-blue-600 hover:text-blue-600 focus:border-l-4"
-                  >
-                    
-                  </a>
-
-                  <div className="relative transition">
-                    <button
-                      onClick={toggleAnalytics}
-                      className="flex peer relative w-full items-center border-l-blue-600 py-3 px-4 text-sm font-medium text-gray-600 outline-none transition-all duration-100 ease-in-out hover:border-l-4 hover:text-blue-600 focus:border-l-4"
-                    >
-                   <svg
-                      className="mr-4 h-5 w-5 align-middle"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"
-                      />
-                    </svg>
-                    Blogs
-                    </button>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className={`absolute right-0 top-4 ml-auto mr-5 h-4 text-gray-600 transition ${
-                        isAnalyticsOpen ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                    <ul
-                      className={`duration-400 flex m-2 flex-col overflow-hidden rounded-xl bg-gray-100 font-medium transition-all duration-300 ${
-                        isAnalyticsOpen ? "max-h-96" : "max-h-0"
-                      }`}
-                    >
-                      <Link to={"create"}>
-                      <li className="flex m-2 cursor-pointer border-l-blue-600 py-3 pl-5 text-sm text-gray-600 transition-all duration-100 ease-in-out hover:border-l-4 hover:text-blue-600">
-                        <span className="mr-5">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                            />
-                          </svg>
-                        </span>
-                     Create post
-                      </li></Link>
-                   <Link to={"manage"}>
-                   <li className="flex m-2 cursor-pointer border-l-blue-600 py-3 pl-5 text-sm text-gray-600 transition-all duration-100 ease-in-out hover:border-l-4 hover:text-blue-600">
-                        <span className="mr-5">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                            />
-                          </svg>
-                        </span>
-                        Manage Blog
-                      </li></Link>
-                    </ul>
-                  </div>
-                </nav>
-              </div>
+          {/* Dropdown Items */}
+          <div 
+            className={`overflow-hidden transition-all duration-300 ease-in-out ${
+              isAnalyticsOpen ? 'max-h-40 opacity-100 mt-1' : 'max-h-0 opacity-0'
+            }`}
+          >
+            <div className="pl-4 space-y-1 border-l border-zinc-800 ml-5 my-1">
+              <Link to="create">
+                <div className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-r-lg transition-colors ${
+                  location.pathname === '/cms/create'
+                    ? 'text-blue-400 bg-blue-500/10 border-l-2 border-blue-500 -ml-[1px]'
+                    : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900/30'
+                }`}>
+                  <PlusCircle size={16} />
+                  <span>Create Post</span>
+                </div>
+              </Link>
+              <Link to="manage">
+                <div className={`flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-r-lg transition-colors ${
+                  location.pathname === '/cms/manage'
+                    ? 'text-blue-400 bg-blue-500/10 border-l-2 border-blue-500 -ml-[1px]'
+                    : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900/30'
+                }`}>
+                  <Settings size={16} />
+                  <span>Manage Blogs</span>
+                </div>
+              </Link>
             </div>
           </div>
+        </div>
+      </nav>
+
+      {/* Footer User Info */}
+      <div className="p-4 border-t border-zinc-900 bg-zinc-950">
+        <div className="flex items-center gap-3 p-2 rounded-xl hover:bg-zinc-900 transition-colors cursor-pointer group">
+          <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-600 to-purple-600 flex items-center justify-center text-white font-bold text-xs shadow-lg">
+            A
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-medium text-white truncate">
+              Anshuman
+            </p>
+            <p className="text-xs text-zinc-500 truncate group-hover:text-zinc-400">
+              admin@anshumancdx.xyz
+            </p>
+          </div>
+          <LogOut size={16} className="text-zinc-600 group-hover:text-red-400 transition-colors" />
         </div>
       </div>
     </div>
